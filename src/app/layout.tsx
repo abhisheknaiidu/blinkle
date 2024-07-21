@@ -32,7 +32,7 @@ export default function RootLayout({
         <MantineProvider
           theme={{
             fontFamily: manrope.style.fontFamily,
-            defaultRadius: "xl",
+            defaultRadius: "lg",
             colors: {
               primary: [
                 "#f4eaff",
