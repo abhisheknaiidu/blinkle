@@ -7,13 +7,15 @@ import { IconArrowRight } from "@tabler/icons-react";
 import Link from "next/link";
 
 import { useWallet } from "@solana/wallet-adapter-react";
+import { useEffect } from "react";
+import { useRouter } from "next/navigation";
+import Header from "@/components/Header";
 export default function Page() {
-  const { publicKey, disconnect } = useWallet();
+  const { publicKey, disconnect, connect } = useWallet();
+
   return (
     <div className="min-h-[100vh] mx-auto max-w-4xl items-center flex flex-col justify-between">
-      <div className="justify-between w-full py-4">
-        <Text>Blinkss</Text>
-      </div>
+      <Header />
       <div className="flex flex-col items-center gap-8 my-auto">
         <Title
           className="text-4xl font-bold text-center gomies"
@@ -30,21 +32,14 @@ export default function Page() {
           Made Easy
         </Title>
         <div>
-          {/* <Button size="lg" rightSection={<IconArrowRight />}>
-            Get Started
-          </Button> */}
-
-          <WalletMultiButton
-            style={{
-              borderRadius: "2rem",
-              fontSize: "0.9rem",
-              backgroundColor: "black",
-              fontWeight: 400,
-              textTransform: "uppercase",
-            }}
+          <Button
+            size="lg"
+            rightSection={<IconArrowRight />}
+            component={WalletMultiButton}
+            color="primary"
           >
-            {!publicKey ? "CONNECT" : publicKey?.toBase58()}
-          </WalletMultiButton>
+            Get Started
+          </Button>
         </div>
       </div>
     </div>

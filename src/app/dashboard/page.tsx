@@ -15,6 +15,7 @@ import { useMemo, useState } from "react";
 import { Fundraiser } from "@/types";
 import { useUser } from "@/hooks/user";
 import FundraiserCard from "@/components/FundraiserCard";
+import Header from "@/components/Header";
 
 const TAB_OPTIONS = [
   {
@@ -49,9 +50,7 @@ export default function Page() {
 
   return (
     <div className="min-h-[100vh] mx-auto max-w-4xl items-center flex flex-col gap-5">
-      <div className="justify-between w-full py-4">
-        <Text fw="bold">Blinkss</Text>
-      </div>
+      <Header />
       <div className="flex flex-col w-full gap-4">
         <Title order={2}>Your Fundraisers</Title>
         <div>
@@ -63,7 +62,7 @@ export default function Page() {
           />
         </div>
 
-        <Grid>
+        <Grid gutter={16}>
           {isUserLoading || userError || !user
             ? new Array(5).fill(0).map((_, index) => (
                 <Grid.Col key={index} span={4}>

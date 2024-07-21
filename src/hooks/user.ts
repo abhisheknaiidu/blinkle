@@ -20,6 +20,7 @@ export const useUser = () => {
     fetcher
   );
 
+  console.log(data?.data)
   return {
     user: data?.data,
     isUserLoading: isLoading,
