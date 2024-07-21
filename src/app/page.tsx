@@ -3,6 +3,7 @@
 import { Button, Text, Title } from "@mantine/core";
 import Image from "next/image";
 import { IconArrowRight } from "@tabler/icons-react";
+import Link from "next/link";
 
 export default function Page() {
   return (
@@ -26,7 +27,12 @@ export default function Page() {
           Made Easy
         </Title>
         <div>
-          <Button size="lg" rightSection={<IconArrowRight />}>
+          <Button
+            size="lg"
+            rightSection={<IconArrowRight />}
+            component={Link}
+            href="/dashboard"
+          >
             Get Started
           </Button>
         </div>
