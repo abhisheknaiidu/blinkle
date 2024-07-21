@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import { Onest } from "next/font/google";
 import localFont from "next/font/local";
 import "./globals.css";
+import WalletContextProvider from "./components/WalletContextProvider";
 import { createTheme, MantineProvider } from "@mantine/core";
 
 const gomiesFont = localFont({ src: "./Gomie-font.woff" });
@@ -49,7 +50,7 @@ export default function RootLayout({
             primaryColor: "primary",
           }}
         >
-          {children}
+          <WalletContextProvider>{children}</WalletContextProvider>
         </MantineProvider>
       </body>
     </html>
