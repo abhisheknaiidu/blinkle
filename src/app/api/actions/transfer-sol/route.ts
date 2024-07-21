@@ -21,20 +21,26 @@ import {
   Transaction,
 } from "@solana/web3.js";
 import { DEFAULT_SOL_ADDRESS, DEFAULT_SOL_AMOUNT } from "./const";
+import { NextRequest } from "next/server";
 
-export const GET = async (req: Request) => {
+export const GET = async (req: NextRequest) => {
   try {
     const requestUrl = new URL(req.url);
+    console.log(req.url);
+    console.log("PARAMS");
+    console.log(req.nextUrl.searchParams);
+    console.log(req.headers);
     const { toPubkey } = validatedQueryParams(requestUrl);
 
-    const baseHref = new URL(
-      `/api/actions/transfer-sol?to=${toPubkey.toBase58()}`,
-      requestUrl.origin
-    ).toString();
+    // const baseHref = new URL(
+    //   `/api/actions/transfer-sol?to=${toPubkey.toBase58()}`,
+    //   requestUrl.origin
+    // ).toString();
+    const baseHref = `/api/actions/transfer-sol?to=${toPubkey.toBase58()}`;
 
     const payload: ActionGetResponse = {
       title: "Actions Example - Transfer Native SOL",
-      icon: new URL("/solana_devs.jpg", requestUrl.origin).toString(),
+      icon: "https://w7.pngwing.com/pngs/380/764/png-transparent-paper-box-computer-icons-symbol-random-icons-miscellaneous-angle-text-thumbnail.png",
       description: "Transfer SOL to another Solana wallet",
       label: "Transfer", // this value will be ignored since `links.actions` exists
       links: {
