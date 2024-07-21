@@ -38,3 +38,5 @@ next-env.d.ts
 
 pnpm-lock.yaml
 .env
+
+public/images

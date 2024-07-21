@@ -72,7 +72,7 @@ export default function Page() {
           />
         </div>
 
-        <Grid gutter={16}>
+        <Grid gutter={16} pb={100}>
           {isUserLoading || userError || !user
             ? new Array(5).fill(0).map((_, index) => (
                 <Grid.Col key={index} span={4}>
@@ -81,7 +81,10 @@ export default function Page() {
               ))
             : funds.map((fundraiser) => (
                 <Grid.Col key={fundraiser.id} span={4}>
-                  <FundraiserCard data={fundraiser} />
+                  <FundraiserCard
+                    data={fundraiser}
+                    userAddress={user.address}
+                  />
                 </Grid.Col>
               ))}
         </Grid>

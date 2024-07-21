@@ -9,8 +9,9 @@ export const kvClient = createClient({
 
 const generateUserKey = (userAddress: string) =>
   `blinkathon-user:${userAddress}`;
-const createDefaultUserData = (): User => ({
+const createDefaultUserData = (address: string): User => ({
   funds: {},
+  address,
 });
 
 export const getUserWithInitialization = async (userAddress: string) => {
@@ -18,7 +19,7 @@ export const getUserWithInitialization = async (userAddress: string) => {
   const user = await kvClient.get<User>(userKey);
 
   if (!user) {
-    const userData = createDefaultUserData();
+    const userData = createDefaultUserData(userAddress);
     await kvClient.set(userKey, userData);
     return userData;
   }

@@ -5,11 +5,12 @@ export type Fundraiser = {
   image: string;
   raised: number;
   goal: number;
-  options?: number[];
+  options: number[];
 };
 
 export type User = {
   funds: {
     [id: string]: Fundraiser;
   };
+  address: string;
 };

@@ -19,7 +19,6 @@ import Link from "next/link";
 import { useMemo, useState } from "react";
 import { Fundraiser } from "@/types";
 import { useUser } from "@/hooks/user";
-import FundraiserCard from "@/components/FundraiserCard";
 import Header from "@/components/Header";
 import { useForm, isNotEmpty, isInRange } from "@mantine/form";
 import FundraiserPreview from "@/components/FundraiserPreview";
@@ -57,7 +56,7 @@ export default function Page() {
   const router = useRouter();
 
   const [activeTab, setActiveTab] = useState(TAB_OPTIONS[0].value);
-  const { user, isUserLoading, userError } = useUser();
+  const { mutateUser } = useUser();
   const form = useForm<FormValues>({
     mode: "controlled",
     initialValues: {
@@ -126,6 +125,7 @@ export default function Page() {
           },
         ],
       });
+      await mutateUser();
       router.push("/dashboard");
     } catch (err: any) {
       console.log(err);

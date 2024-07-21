@@ -1,3 +1,4 @@
+import { generateImage } from "@/services/image";
 import { getUserWithInitialization } from "@/services/users";
 import { NextRequest, NextResponse } from "next/server";
 
@@ -13,6 +14,14 @@ export async function GET(req: NextRequest) {
       );
     }
     const userData = await getUserWithInitialization(userAddress);
+    await Promise.all(
+      Object.values(userData.funds).map(async (fund) => {
+        const img = await generateImage(fund.raised, fund.goal);
+        fund.image = `images/${img}.png`;
+        console.log(img);
+        return img;
+      })
+    );
     return NextResponse.json(userData, { status: 200 });
   } catch (err: any) {
     console.log(err);
