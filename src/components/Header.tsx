@@ -5,6 +5,8 @@ import { IconLogout } from "@tabler/icons-react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import React, { useEffect } from "react";
+import LogoImage from "@/assets/logo.svg";
+import Image from "next/image";
 
 const Header = () => {
   const router = useRouter();
@@ -28,12 +30,9 @@ const Header = () => {
 
   return (
     <div className="flex justify-between w-full py-4 items-center">
-      <Link href="">
+      <Link href="/">
         <div className="flex items-center gap-2">
-          <img src="/assets/icon.png" alt="logo" className="h-10" />
-          <Text fw="bold" fz={22}>
-            BLINKLE
-          </Text>
+          <Image src={LogoImage} alt="logo" height={38} />
         </div>
       </Link>
       {!publicKey ? (
@@ -52,11 +51,6 @@ const Header = () => {
           CONNECT
         </Button>
       ) : (
-        // <img
-        //   src={`https://api.dicebear.com/8.x/adventurer/svg?seed=${publicKey.toBase58()}`}
-        //   alt="Avatar"
-        //   className="rounded-full h-10 w-10"
-        // />
         <Menu width={200} position="bottom-end">
           <Menu.Target>
             <img
