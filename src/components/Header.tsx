@@ -16,16 +16,15 @@ const Header = () => {
   useEffect(() => {
     console.log({ publicKey, pathname });
     if (publicKey) {
-      //   router.push("/dashboard");
-      // if (pathname === "/") {
-      //   router.push("/dashboard");
-      // }
+      router.push("/dashboard");
+      if (pathname === "/") {
+        router.push("/dashboard");
+      }
+    } else {
+      if (pathname !== "/") {
+        router.push("/");
+      }
     }
-    // else {
-    //   if (pathname !== "/") {
-    //     router.push("/");
-    //   }
-    // }
   }, [publicKey, pathname]);
 
   return (
