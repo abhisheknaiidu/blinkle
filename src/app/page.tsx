@@ -11,6 +11,7 @@ import Header from "@/components/Header";
 import cn from "classnames";
 import { motion } from "framer-motion";
 import { prettyFont } from "./fonts";
+import Link from "next/link";
 
 export default function Page() {
   return (
@@ -71,6 +72,9 @@ export default function Page() {
                 variant="light"
                 color="dark"
                 rightSection={<IconBrandGithub height={16} width={16} />}
+                component={Link}
+                href="https://github.com/abhisheknaiidu/blinkathon-shipyard-24"
+                target="_blank"
               >
                 Github
               </Button>
@@ -78,6 +82,9 @@ export default function Page() {
                 variant="light"
                 color="dark"
                 rightSection={<IconBrandX height={16} width={16} />}
+                component={Link}
+                href="https://github.com/abhisheknaiidu/blinkathon-shipyard-24"
+                target="_blank"
               >
                 Twitter
               </Button>
