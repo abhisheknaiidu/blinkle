@@ -29,7 +29,7 @@ export default function Page() {
         <Header />
       </motion.div>
       <div
-        className="grid gap-20 content-center items-center grid-rows-1 py-20 w-full"
+        className="grid gap-20 content-center items-center grid-rows-1 py-20 pt-12 w-full"
         style={{
           gridTemplateColumns: "auto 1fr",
           height: "calc(100dvh - 5rem)",
