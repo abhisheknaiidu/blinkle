@@ -19,10 +19,6 @@ const Header = () => {
       if (pathname === "/") {
         router.push("/dashboard");
       }
-    } else {
-      if (pathname !== "/") {
-        router.push("/");
-      }
     }
   }, [publicKey, pathname]);
 

@@ -3,6 +3,7 @@
 import {
   ActionIcon,
   Button,
+  Card,
   Divider,
   Grid,
   NumberInput,
@@ -133,100 +134,90 @@ export default function Page() {
   };
 
   return (
-    <div className="min-h-[100vh] mx-auto max-w-4xl items-center flex flex-col gap-5">
+    <div className="min-h-[100vh] mx-auto max-w-[1280px] px-[80px] items-center flex flex-col gap-5">
       <Header />
-      <div className="flex flex-col w-full gap-4">
-        <div className="flex gap-3 items-center">
-          <ActionIcon component={Link} href="/dashboard" variant="transparent">
-            <IconArrowBack />
-          </ActionIcon>
-          <Title order={2}>Create a Fundraiser</Title>
+      <div className="flex flex-col w-full">
+        <Title
+          className="text-[#020227] text-[32px] mt-4 mb-2 pretty uppercase"
+          order={2}
+        >
+          Create blink
+        </Title>
+        <div className="text-sm uppercase text-[#010126]">
+          EXPLORE ALL YOUR FUNDRAISERS, GITHUB PROFILES, DRIP, ETC
         </div>
         <Grid>
           <Grid.Col span={6}>
+            <div className="flex flex-col gap-4 items-center py-16">
+              <Title order={3}>Preview</Title>
+              <Card
+                shadow="none"
+                padding="lg"
+                style={{
+                  transition: "all 0.2s ease-out",
+                  borderRadius: "30px",
+                  width: "462px",
+                }}
+              >
+                <Card.Section
+                  style={{
+                    position: "relative",
+                    minHeight: "462px",
+                    background: "#8F00FF",
+                  }}
+                >
+                  <div className="text-[27px] pretty uppercase leading-[41px] px-[30px] text-center pt-[55px] pb-[10px] text-white relative opacity-80">
+                    {form.values?.title || "Untitled"}
+                  </div>
+
+                  <div className="px-[30px] text-[16px] leading-[18px] text-center text-[#fbf8f8]">
+                    {form.values.description}
+                  </div>
+                </Card.Section>
+                <Grid mt={16}>
+                  <Grid.Col span="auto">
+                    <TextInput placeholder="Enter amount" size="md" />
+                  </Grid.Col>
+                  <Grid.Col span="content">
+                    <Button className="bg-[#0F0906]" size="md">
+                      Sponsor
+                    </Button>
+                  </Grid.Col>
+                </Grid>
+              </Card>
+            </div>
+          </Grid.Col>
+          <Grid.Col span={6} className="flex flex-col pt-[200px]">
+            <div className="rounded-[23px] w-[15%] bg-[#C5DEFF] py-[6px] px-[14px]">
+              <div className="text-[#16509E] text-[12px] leading-[14px]">
+                Fundraiser
+              </div>
+            </div>
             <form
-              className="flex flex-col gap-4 py-20 border-r-purple-200 border-solid border pr-4"
+              className="flex flex-col gap-4 py-20 pt-5  pr-4"
               onSubmit={form.onSubmit(handleOnSubmit)}
             >
-              <TextInput
-                label="Title"
-                placeholder="Enter title"
-                size="md"
-                style={{
-                  borderRadius: 10,
-                }}
+              <input
+                placeholder="enter title"
+                className="w-full border border-[#0202271A] bg-[#EBE4F1] rounded-[10px] pretty uppercase focus:outline-none focus:border-gray-900 py-3 px-4"
                 {...form.getInputProps("title")}
               />
-              <Textarea
-                label="Description"
-                placeholder="Enter description"
-                size="md"
-                style={{
-                  borderRadius: 10,
-                }}
+              <textarea
+                placeholder="enter description"
+                rows={5}
+                className="w-full border border-[#0202271A] bg-[#EBE4F1] rounded-[10px] focus:outline-none focus:border-gray-900 py-3 px-4"
                 {...form.getInputProps("description")}
               />
-              <NumberInput
-                label="Goal"
-                placeholder="Enter goal"
+
+              <Button
                 size="md"
-                style={{
-                  borderRadius: 10,
-                }}
-                {...form.getInputProps("goal")}
-              />
-              <Grid gutter={12} mt={10}>
-                <Grid.Col span={4}>
-                  <NumberInput
-                    placeholder="option"
-                    size="md"
-                    style={{
-                      borderRadius: 10,
-                    }}
-                    {...form.getInputProps("option1")}
-                  />
-                </Grid.Col>
-                <Grid.Col span={4}>
-                  <NumberInput
-                    placeholder="option"
-                    size="md"
-                    style={{
-                      borderRadius: 10,
-                    }}
-                    {...form.getInputProps("option2")}
-                  />
-                </Grid.Col>
-                <Grid.Col span={4}>
-                  <NumberInput
-                    placeholder="option"
-                    size="md"
-                    style={{
-                      borderRadius: 10,
-                    }}
-                    {...form.getInputProps("option3")}
-                  />
-                </Grid.Col>
-              </Grid>
-              <Button size="md" type="submit" loading={isMutating}>
+                type="submit"
+                className="w-[200px] py-[5px] px-[15px] bg-[#0F0906]"
+                loading={isMutating}
+              >
                 Create
               </Button>
             </form>
-          </Grid.Col>
-
-          <Grid.Col span={6}>
-            <div className="flex flex-col gap-4 items-center py-16">
-              <Title order={3}>Preview</Title>
-              <FundraiserPreview
-                title={form.values.title}
-                description={form.values.description}
-                goal={form.values.goal}
-                options={[
-                  form.values.option1,
-                  form.values.option2,
-                  form.values.option3,
-                ]}
-              />
-            </div>
           </Grid.Col>
         </Grid>
       </div>
