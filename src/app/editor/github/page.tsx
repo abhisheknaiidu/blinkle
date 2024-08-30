@@ -3,29 +3,24 @@
 import {
   ActionIcon,
   Button,
-  Divider,
   Grid,
   NumberInput,
-  SegmentedControl,
-  Skeleton,
   Text,
   Textarea,
   TextInput,
   Title,
 } from "@mantine/core";
-import Image from "next/image";
 import { IconArrowBack, IconArrowRight, IconBubble } from "@tabler/icons-react";
 import Link from "next/link";
 import { useMemo, useState } from "react";
-import { Fundraiser } from "@/types";
-import { useUser } from "@/hooks/user";
 import Header from "@/components/Header";
 import { useForm, isNotEmpty, isInRange } from "@mantine/form";
-import FundraiserPreview from "@/components/FundraiserPreview";
 import useSWRMutation from "swr/mutation";
 import { genericMutationFetcher } from "@/utils/swr-fetcher";
 import { useWallet } from "@solana/wallet-adapter-react";
 import { useRouter } from "next/navigation";
+import GitHubPreview from "@/components/GitHubPreview";
+import axios from "axios";
 
 const TAB_OPTIONS = [
   {
@@ -56,6 +51,9 @@ export default function Page() {
   const router = useRouter();
 
   const [activeTab, setActiveTab] = useState(TAB_OPTIONS[0].value);
+  const [username, setUsername] = useState("");
+  const [userData, setUserData] = useState(null);
+
   // const { mutateUser } = useUser();
   const form = useForm<FormValues>({
     mode: "controlled",
@@ -132,6 +130,15 @@ export default function Page() {
     }
   };
 
+  const handleFetchUserData = async () => {
+    try {
+      const response = await axios.get(`/api/github-user?username=${username}`);
+      setUserData(response.data);
+    } catch (err) {
+      setUserData(null);
+    }
+  };
+
   return (
     <div className="min-h-[100vh] mx-auto max-w-4xl items-center flex flex-col gap-5">
       <Header />
@@ -140,7 +147,7 @@ export default function Page() {
           <ActionIcon component={Link} href="/dashboard" variant="transparent">
             <IconArrowBack />
           </ActionIcon>
-          <Title order={2}>Create a Fundraiser</Title>
+          <Title order={2}>Create a GitHub sponsor blink</Title>
         </div>
         <Grid>
           <Grid.Col span={6}>
@@ -148,16 +155,35 @@ export default function Page() {
               className="flex flex-col gap-4 py-20 border-r-purple-200 border-solid border pr-4"
               onSubmit={form.onSubmit(handleOnSubmit)}
             >
-              <TextInput
-                label="Title"
-                placeholder="Enter title"
+              <div className="flex space-x-3 items-end">
+                <TextInput
+                  label="enter username"
+                  placeholder="add your username"
+                  size="md"
+                  className="w-full"
+                  onChange={(e) => setUsername(e.target.value)}
+                />
+                <Button
+                  //   size="sm"
+                  variant="gradient"
+                  gradient={{ from: "yellow", to: "grape", deg: 291 }}
+                  className="w-[90px] py-[5px] px-[15px]"
+                  onClick={handleFetchUserData}
+                >
+                  fetch
+                </Button>
+              </div>
+
+              {/* <TextInput
+                label="enter username"
+                placeholder="add your username"
                 size="md"
                 style={{
                   borderRadius: 10,
                 }}
                 {...form.getInputProps("title")}
-              />
-              <Textarea
+              /> */}
+              {/* <Textarea
                 label="Description"
                 placeholder="Enter description"
                 size="md"
@@ -165,16 +191,8 @@ export default function Page() {
                   borderRadius: 10,
                 }}
                 {...form.getInputProps("description")}
-              />
-              <NumberInput
-                label="Goal"
-                placeholder="Enter goal"
-                size="md"
-                style={{
-                  borderRadius: 10,
-                }}
-                {...form.getInputProps("goal")}
-              />
+              /> */}
+
               <Grid gutter={12} mt={10}>
                 <Grid.Col span={4}>
                   <NumberInput
@@ -216,10 +234,10 @@ export default function Page() {
           <Grid.Col span={6}>
             <div className="flex flex-col gap-4 items-center py-16">
               <Title order={3}>Preview</Title>
-              <FundraiserPreview
+              <GitHubPreview
                 title={form.values.title}
                 description={form.values.description}
-                goal={form.values.goal}
+                userData={userData}
                 options={[
                   form.values.option1,
                   form.values.option2,

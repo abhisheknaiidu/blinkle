@@ -45,7 +45,7 @@ export async function POST(req: Request) {
       goal: body.goal,
       raised: 0,
       options: body.options,
-      image: `https://picsum.photos/800/800?random=${Math.random()}`,
+      image: `./test.svg`,
     };
 
     await saveUser(userAddress, userData);

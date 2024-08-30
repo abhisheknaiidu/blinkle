@@ -15,9 +15,9 @@ const Header = () => {
     console.log({ publicKey, pathname });
     if (publicKey) {
       //   router.push("/dashboard");
-      if (pathname === "/") {
-        router.push("/dashboard");
-      }
+      // if (pathname === "/") {
+      //   router.push("/dashboard");
+      // }
     }
     // else {
     //   if (pathname !== "/") {
@@ -29,9 +29,12 @@ const Header = () => {
   return (
     <div className="flex justify-between w-full py-4 items-center">
       <Link href="">
-        <Text fw="bold" fz={22}>
-          Blinkss
-        </Text>
+        <div className="flex items-center gap-2">
+          <img src="/assets/icon.png" alt="logo" className="h-10" />
+          <Text fw="bold" fz={22}>
+            BLINKLE
+          </Text>
+        </div>
       </Link>
       {!publicKey ? (
         <Button

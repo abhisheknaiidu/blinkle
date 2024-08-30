@@ -7,7 +7,8 @@ import WalletContextProvider from "./components/WalletContextProvider";
 import { createTheme, MantineProvider } from "@mantine/core";
 
 const gomiesFont = localFont({ src: "./Gomie-font.woff" });
-const manrope = Onest({ subsets: ["latin"] });
+const prettyFont = localFont({ src: "./prettywise-light.otf" });
+const onest = Onest({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "The Ultimate Crowdfunding Platform",
@@ -21,17 +22,26 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={manrope.className}>
+      <body className={onest.className}>
         <style>
           {`
           .gomies {
             font-family: ${gomiesFont.style.fontFamily} !important;
           }
+            .pretty {
+              font-family: ${prettyFont.style.fontFamily} !important;
         `}
         </style>
+        <link
+          rel="preload"
+          href="./prettywise-light.otf"
+          as="font"
+          type="font/otf"
+          crossOrigin="anonymous"
+        />
         <MantineProvider
           theme={{
-            fontFamily: manrope.style.fontFamily,
+            fontFamily: onest.style.fontFamily,
             defaultRadius: "lg",
             colors: {
               primary: [

@@ -21,17 +21,20 @@
     "@types/uuid": "^10.0.0",
     "@vercel/kv": "^2.0.0",
     "axios": "^1.7.2",
+    "cheerio": "^1.0.0-rc.12",
     "next": "14.2.5",
-    "puppeteer": "^22.13.1",
+    "puppeteer": "^22.15.0",
     "react": "^18",
     "react-dom": "^18",
     "swr": "^2.2.5",
-    "uuid": "^10.0.0"
+    "uuid": "^10.0.0",
+    "website-scraper": "^5.3.1"
   },
   "devDependencies": {
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
+    "@types/website-scraper": "^1.2.10",
     "eslint": "^8",
     "eslint-config-next": "14.2.5",
     "postcss": "^8.4.39",
