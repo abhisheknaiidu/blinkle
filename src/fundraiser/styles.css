@@ -1,0 +1,100 @@
+body { 
+	margin:0;
+	padding:0;
+}
+.2137_283 { 
+	overflow:hidden;
+}
+.e2137_283 { 
+	background: #8F00FF;
+	box-shadow: 0px 12.32px 108.64px 0px #EBE4F1 inset;
+	width:800px;
+	height:800px;
+	position:absolute;
+}
+.e2137_279 { 
+	width:672px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	height:167.39999389648438px;
+	position:absolute;
+	left:64px;
+	top:120px;
+}
+.e2137_278 { 
+	text-align: center;
+	color:rgba(255, 255, 255, 1);
+	opacity:0.800000011920929;
+	margin: 0 auto;
+	height:66px;
+	font-family:"FONTSPRING DEMO - Prettywise Light";
+	font-size:43.12000274658203px;
+	letter-spacing:0;
+}
+.e2137_274 { 
+	color:rgba(255, 255, 255, 1);
+	opacity:0.6000000238418579;
+	height:87px;
+	font-family:Gilroy;
+	text-align:center;
+	font-size:24.64000129699707px;
+	letter-spacing:0;
+}
+.e2137_280 { 
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 25px;
+	width:702.4000244140625px;
+	height:141.92001342773438px;
+	position:absolute;
+	left:49.599998474121094px;
+	bottom:75px;
+}
+.e2137_276 { 
+	background-color:rgba(255, 255, 255, 1);
+	border-radius:89px;
+	padding: 21px 35px;
+	display: flex;
+	align-items: center;
+}
+.e2137_277 { 
+	color:rgba(163.54713052511215, 47.15258941054344, 255, 1);
+	opacity:0.6000000238418579;
+	width:201px;
+	height:34px;
+	font-family:Gilroy;
+	text-align:left;
+	font-size:28.48000144958496px;
+	letter-spacing:0;
+	transform: translateY(2px);
+	font-weight: 400;
+}
+.e2137_282 { 
+	justify-content: center;
+	display: flex;
+	gap: 10px;
+}
+.e2137_275 { 
+	color:rgba(255, 255, 255, 1);
+	opacity:0.6000000238418579;
+	width:fit-content;
+	height:30px;
+	font-family:Gilroy;
+	text-align:center;
+	font-size:24.64000129699707px;
+	letter-spacing:0.04em;
+}
+.e2137_281 { 
+	color:rgba(255, 255, 255, 1);
+	opacity:0.6000000238418579;
+	width:82px;
+	height:29px;
+	top:0.5px;
+	font-family:Gilroy;
+	text-align:center;
+	font-size:24.64000129699707px;
+	letter-spacing:0.04em;
+}
