@@ -16,7 +16,6 @@ const Header = () => {
   useEffect(() => {
     console.log({ publicKey, pathname });
     if (publicKey) {
-      router.push("/dashboard");
       if (pathname === "/") {
         router.push("/dashboard");
       }
