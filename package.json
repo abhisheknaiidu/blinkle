@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "next dev --turbo",
     "build": "next build",
     "start": "next start",
     "lint": "next lint"
@@ -23,6 +23,8 @@
     "axios": "^1.7.2",
     "cheerio": "^1.0.0-rc.12",
     "clsx": "^2.1.1",
+    "classnames": "^2.5.1",
+    "framer-motion": "^11.3.31",
     "next": "14.2.5",
     "puppeteer": "^22.15.0",
     "react": "^18",

@@ -1,25 +1,52 @@
 "use client";
 
-import { Button, Text, Title } from "@mantine/core";
+import { Button, Flex, Text, Title } from "@mantine/core";
+import { IconBrandGithub, IconBrandX } from "@tabler/icons-react";
 import Image from "next/image";
-import { WalletMultiButton } from "@solana/wallet-adapter-react-ui";
-import { IconArrowRight } from "@tabler/icons-react";
+
+import DriPImage from "@/assets/drip.png";
+import FundraiserImage from "@/assets/fundraiser.png";
+import GitHubImage from "@/assets/github.png";
+import Header from "@/components/Header";
+import cn from "classnames";
+import { motion } from "framer-motion";
+import { prettyFont } from "./fonts";
 import Link from "next/link";
 
-import { useWallet } from "@solana/wallet-adapter-react";
-import { useEffect } from "react";
-import { useRouter } from "next/navigation";
-import Header from "@/components/Header";
 export default function Page() {
-  const { publicKey, disconnect, connect } = useWallet();
-
   return (
-    <div className="h-[100vh] mx-auto px-[100px] py-[30px] flex flex-col">
-      <Header />
-      <div className="flex h-[inherit] pt-[">
-        <div className="flex-[0_0_40%] flex-col">
+    <div
+      className="h-[100vh] mx-auto max-w-[80rem] grid grid-cols-1 px-6"
+      style={{
+        gridTemplateRows: "5rem 1fr",
+      }}
+    >
+      <motion.div
+        initial={{ opacity: 0, translateY: 4 }}
+        animate={{ opacity: 1, translateY: 0 }}
+        transition={{ duration: 0.4 }}
+      >
+        <Header />
+      </motion.div>
+      <div
+        className="grid gap-20 content-center items-center grid-rows-1 py-20 pt-12 w-full"
+        style={{
+          gridTemplateColumns: "auto 1fr",
+          height: "calc(100dvh - 5rem)",
+        }}
+      >
+        <motion.div
+          initial={{ opacity: 0, translateY: 10 }}
+          animate={{ opacity: 1, translateY: 0 }}
+          transition={{ duration: 0.5 }}
+          className="flex flex-col justify-between max-w-[30rem]"
+          style={{
+            gridTemplateColumns: "auto 1fr",
+            height: "calc(100dvh - 15rem)",
+          }}
+        >
           <Title
-            className="text-[107px] pretty"
+            className={cn(prettyFont.className)}
             order={1}
             fz={100}
             style={{
@@ -34,83 +61,66 @@ export default function Page() {
             <br />
             Blinks
           </Title>
-          <div>
-            <Button
-              size="lg"
-              rightSection={<IconArrowRight />}
-              component={WalletMultiButton}
-              color="primary"
-            >
-              Get Started
-            </Button>
-          </div>
-        </div>
-        <div className="flex-[0_0_60%]">
-          <div className=" grid grid-rows-2">
-            <div className="row-span-1 flex flex-col mb-[10px] justify-center items-center rounded-2xl py-[62px] px-[50px] bg-[#8F00FF] shadow-[0px_5.833px_85px_0px_rgba(235,228,241,0.5)]">
-              <div className="h-[27px] px-4 py-[5px] bg-white/10 rounded-[30px] backdrop-blur-sm justify-center items-center gap-2.5 inline-flex">
-                <div className="opacity-80 text-center">
-                  <span className="text-white text-sm font-bold font-['Gilroy']">
-                    15.235 / 20 SOL{" "}
-                  </span>
-                  <span className="text-white text-sm font-medium font-['Gilroy']">
-                    RAISED
-                  </span>
-                </div>
-              </div>{" "}
-              <div className="text-white text-3xl mt-4 mb-2 pretty uppercase">
-                NEED SUPPORT FOR NILE CLEANUP
-              </div>
-              <p className="mb-6 max-w-[405px] opacity-60 text-center text-white text-xs">
-                Help restore the Nile River by funding cleanup operations,
-                pollution control, and community education. Your support can
-                revitalize this vital waterway for people and wildlife.
-              </p>
-              <button className=" text-[#a32fff] font-bold px-[18px] py-[11px] bg-white rounded-[45px] justify-center items-center">
-                SUPPORT NOW
-              </button>
-            </div>
-            <div className="row-span-1 relative grid grid-cols-2 gap-[10px]">
-              <div className="col-span-1 w-full rounded-2xl py-10 px-8 h-full bg-[url('/assets/github_placeholder.png')] bg-cover bg-center opacity-80 bg-black shadow-inner">
-                <div className="text-white text-3xl mt-4 mb-2 pretty uppercase">
-                  THE INTERNET GUY
-                </div>
-                <p className="mb-6 max-w-[217px] text-bold opacity-60 text-white text-xs">
-                  @theninternetguy
-                  <br />
-                  Arnold is an active GitHub contributor with 65 public repos.
-                  Followed by 129 & and following 18 <br />
-                  Bio: Some random dude on internet
-                  <br />
-                </p>
-                <p className="text-bold text-xs text-white mt-1">
-                  69.69 SOL Crowdsrourced
-                </p>
+          <Flex direction="column" gap={28}>
+            <Text tt="uppercase" c="dimmed" size="sm">
+              Dive into the fascinating world of BONK Coin with decks crafted by
+              AI to cater to your interests. Our platform empowers everyone to
+              learn and grow together
+            </Text>
+            <Flex gap={12}>
+              <Button
+                variant="light"
+                color="dark"
+                rightSection={<IconBrandGithub height={16} width={16} />}
+                component={Link}
+                href="https://github.com/abhisheknaiidu/blinkathon-shipyard-24"
+                target="_blank"
+              >
+                Github
+              </Button>
+              <Button
+                variant="light"
+                color="dark"
+                rightSection={<IconBrandX height={16} width={16} />}
+                component={Link}
+                href="https://github.com/abhisheknaiidu/blinkathon-shipyard-24"
+                target="_blank"
+              >
+                Twitter
+              </Button>
+            </Flex>
+          </Flex>
+        </motion.div>
 
-                <button className="absolute bottom-8 text-[#0F0906] font-bold px-[18px] py-[11px] bg-white rounded-[45px] justify-center items-center">
-                  SPONSOR
-                </button>
-              </div>
-              <div className="col-span-1 rounded-2xl w-full py-10 px-8 h-full bg-[#9c7ea1] shadow-inner">
-                <div className="text-black text-3xl mt-4 mb-2 pretty uppercase">
-                  GOAT ARTIST
-                </div>
-                <p className="mb-6 max-w-[217px] text-bold opacity-60 text-[#302f4f] text-xs">
-                  @goatartist
-                  <br />
-                  Cute PixelArt and 2D art on Fridays ✌️ Kaigara, is an
-                  illustrator and graphic designer on Solana
-                </p>
-                <p className="text-bold text-xs text-[#302f4f] mt-1">
-                  12.420 SOL Crowdsrourced
-                </p>
-
-                <button className="absolute bottom-8 text-white font-bold px-[18px] py-[11px] bg-[#C327AC] rounded-[45px] justify-center items-center">
-                  SPONSOR
-                </button>
-              </div>{" "}
-            </div>
-          </div>
+        <div className="h-fit w-full max-w-[42rem] grid grid-cols-2 gap-3 my-auto items-center ml-auto">
+          <motion.div
+            className="col-span-2 aspect-[65/35]"
+            initial={{ opacity: 0, translateY: 15 }}
+            animate={{ opacity: 1, translateY: 0 }}
+            transition={{ duration: 0.5 }}
+          >
+            <Image
+              src={FundraiserImage}
+              alt="Fundraiser"
+              className="rounded-3xl h-full"
+            />
+          </motion.div>
+          <motion.div
+            className="aspect-square"
+            initial={{ opacity: 0, translateY: 25 }}
+            animate={{ opacity: 1, translateY: 0 }}
+            transition={{ duration: 0.6 }}
+          >
+            <Image src={GitHubImage} alt="GitHub" className="rounded-3xl" />
+          </motion.div>
+          <motion.div
+            className="aspect-square"
+            initial={{ opacity: 0, translateY: 35 }}
+            animate={{ opacity: 1, translateY: 0 }}
+            transition={{ duration: 0.7 }}
+          >
+            <Image src={DriPImage} alt="DriP" className="rounded-3xl" />
+          </motion.div>
         </div>
       </div>
     </div>

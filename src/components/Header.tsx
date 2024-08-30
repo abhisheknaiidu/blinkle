@@ -1,10 +1,12 @@
-import { Button, Menu, Text } from "@mantine/core";
+import { ActionIcon, Button, Menu, Text, UnstyledButton } from "@mantine/core";
 import { useWallet } from "@solana/wallet-adapter-react";
 import { WalletMultiButton } from "@solana/wallet-adapter-react-ui";
 import { IconLogout } from "@tabler/icons-react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import React, { useEffect } from "react";
+import LogoImage from "@/assets/logo.svg";
+import Image from "next/image";
 
 const Header = () => {
   const router = useRouter();
@@ -28,12 +30,9 @@ const Header = () => {
 
   return (
     <div className="flex justify-between w-full py-4 items-center">
-      <Link href="">
+      <Link href="/">
         <div className="flex items-center gap-2">
-          <img src="/assets/icon.png" alt="logo" className="h-10" />
-          <Text fw="bold" fz={22}>
-            BLINKLE
-          </Text>
+          <Image src={LogoImage} alt="logo" height={32} />
         </div>
       </Link>
       {!publicKey ? (
@@ -52,18 +51,15 @@ const Header = () => {
           CONNECT
         </Button>
       ) : (
-        // <img
-        //   src={`https://api.dicebear.com/8.x/adventurer/svg?seed=${publicKey.toBase58()}`}
-        //   alt="Avatar"
-        //   className="rounded-full h-10 w-10"
-        // />
         <Menu width={200} position="bottom-end">
           <Menu.Target>
+            {/* <ActionIcon variant="subtle" p={0} h="fit-content" w="fit-content"> */}
             <img
-              src={`https://api.dicebear.com/8.x/adventurer/svg?seed=${publicKey.toBase58()}`}
+              src={`https://api.dicebear.com/9.x/glass/svg?seed=${publicKey.toBase58()}`}
               alt="Avatar"
-              className="rounded-full h-12 w-10 cursor-pointer"
+              className="rounded-full h-9 w-9 cursor-pointer"
             />
+            {/* </ActionIcon> */}
           </Menu.Target>
 
           <Menu.Dropdown>
