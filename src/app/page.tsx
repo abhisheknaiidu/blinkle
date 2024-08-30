@@ -92,7 +92,7 @@ export default function Page() {
           </Flex>
         </motion.div>
 
-        <div className="h-fit w-full max-w-[44rem] grid grid-cols-2 gap-3 my-auto items-center ml-auto">
+        <div className="h-fit w-full max-w-[42rem] grid grid-cols-2 gap-3 my-auto items-center ml-auto">
           <motion.div
             className="col-span-2 aspect-[65/35]"
             initial={{ opacity: 0, translateY: 15 }}
