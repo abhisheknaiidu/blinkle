@@ -9,6 +9,7 @@ import { createTheme, MantineProvider } from "@mantine/core";
 const gomiesFont = localFont({ src: "./Gomie-font.woff" });
 const prettyFont = localFont({ src: "./prettywise-light.otf" });
 const onest = Onest({ subsets: ["latin"] });
+import { Toaster, toast } from "sonner";
 
 export const metadata: Metadata = {
   title: "The Ultimate Crowdfunding Platform",
@@ -45,16 +46,16 @@ export default function RootLayout({
             defaultRadius: "lg",
             colors: {
               primary: [
-                "#f4eaff",
-                "#e3d0ff",
-                "#c59dfd",
-                "#a565fc",
-                "#8939fb",
-                "#781dfb",
-                "#700ffc",
-                "#5e04e1",
-                "#5400c9",
-                "#4700b1",
+                "#fff",
+                "#eee",
+                "#ccc",
+                "#aaa",
+                "#888",
+                "#666",
+                "#444",
+                "#333",
+                "#222",
+                "#000",
               ],
             },
             primaryColor: "primary",
@@ -62,6 +63,7 @@ export default function RootLayout({
         >
           <WalletContextProvider>{children}</WalletContextProvider>
         </MantineProvider>
+        <Toaster position="top-center" richColors />
       </body>
     </html>
   );
