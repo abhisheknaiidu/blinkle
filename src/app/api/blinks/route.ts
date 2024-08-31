@@ -9,11 +9,11 @@ export async function POST(req: Request) {
     const body = (await req.json()) as {
       title: string;
       description: string;
-      goal: number;
-      options: number[];
+      type: BLINK_TYPE;
+      avatar?: string;
     };
 
-    for (const key of ["title", "description", "goal"]) {
+    for (const key of ["title", "description", "type"]) {
       if (!body[key as keyof typeof body]) {
         return NextResponse.json(
           {
@@ -43,10 +43,10 @@ export async function POST(req: Request) {
       id: fundId,
       title: body.title,
       description: body.description,
-      goal: body.goal,
       raised: 0,
       image: `./test.svg`,
-      type: BLINK_TYPE.FUNDRAISER,
+      type: body.type,
+      avatar: body.avatar as any,
     };
 
     await saveUser(userAddress, userData);

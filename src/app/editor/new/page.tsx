@@ -39,7 +39,7 @@ const TAB_OPTIONS = [
 type FormValues = {
   title: string;
   description: string;
-  goal: number;
+  // goal: number;
 };
 
 export default function Page() {
@@ -51,19 +51,19 @@ export default function Page() {
     initialValues: {
       title: "",
       description: "",
-      goal: 1,
+      // goal: 1,
     },
 
     validate: {
       title: isNotEmpty("Title is required"),
       description: isNotEmpty("Description is required"),
-      goal: isInRange(
-        {
-          min: 1,
-          max: 200,
-        },
-        "Goal must be between 1 and 200 SOL"
-      ),
+      // goal: isInRange(
+      //   {
+      //     min: 1,
+      //     max: 200,
+      //   },
+      //   "Goal must be between 1 and 200 SOL"
+      // ),
     },
   });
 
@@ -200,12 +200,12 @@ export default function Page() {
                 }}
                 {...form.getInputProps("description")}
               />
-              <NumberInput
+              {/* <NumberInput
                 w={140}
                 size="md"
                 placeholder="Enter Goal"
                 {...form.getInputProps("goal")}
-              />
+              /> */}
 
               <Flex>
                 <Button

@@ -6,20 +6,20 @@ export enum BLINK_TYPE {
 
 export type GitHubBlink = {
   id: string;
-  username: string;
-  avatar: string;
-  name: string;
+  title: string;
   description: string;
+  avatar: string;
+  image?: string;
   raised: number;
   type: BLINK_TYPE.GITHUB;
 };
 
 export type DripBlink = {
   id: string;
-  username: string;
-  avatar: string;
-  name: string;
+  title: string;
   description: string;
+  avatar: string;
+  image?: string;
   raised: number;
   type: BLINK_TYPE.DRIP;
 };
@@ -28,9 +28,8 @@ export type FundraiserBlink = {
   id: string;
   title: string;
   description: string;
-  image: string;
+  image?: string;
   raised: number;
-  goal: number;
   type: BLINK_TYPE.FUNDRAISER;
 };
 
