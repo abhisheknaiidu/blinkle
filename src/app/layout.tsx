@@ -1,15 +1,10 @@
+import { MantineProvider } from "@mantine/core";
 import "@mantine/core/styles.css";
 import type { Metadata } from "next";
-import { Onest } from "next/font/google";
-import localFont from "next/font/local";
-import "./globals.css";
+import { Toaster } from "sonner";
 import WalletContextProvider from "./components/WalletContextProvider";
-import { createTheme, MantineProvider } from "@mantine/core";
-
-const gomiesFont = localFont({ src: "./Gomie-font.woff" });
-const prettyFont = localFont({ src: "./prettywise-light.otf" });
-const onest = Onest({ subsets: ["latin"] });
-import { Toaster, toast } from "sonner";
+import { onest } from "./fonts";
+import "./globals.css";
 
 export const metadata: Metadata = {
   title: "The Ultimate Crowdfunding Platform",
@@ -24,15 +19,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={onest.className}>
-        <style>
-          {`
-          .gomies {
-            font-family: ${gomiesFont.style.fontFamily} !important;
-          }
-            .pretty {
-              font-family: ${prettyFont.style.fontFamily} !important;
-        `}
-        </style>
+        <style></style>
         <link
           rel="preload"
           href="./prettywise-light.otf"
