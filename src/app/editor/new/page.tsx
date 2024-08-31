@@ -1,41 +1,26 @@
 "use client";
 
+import { prettyFont } from "@/app/fonts";
+import Header from "@/components/Header";
+import { genericMutationFetcher } from "@/utils/swr-fetcher";
 import {
-  ActionIcon,
   Badge,
   Button,
   Card,
-  Divider,
   Flex,
   Grid,
-  NumberInput,
-  SegmentedControl,
-  Skeleton,
-  Text,
-  Textarea,
   TextInput,
-  Title,
+  Title
 } from "@mantine/core";
-import Image from "next/image";
-import {
-  IconArrowBack,
-  IconArrowRight,
-  IconBubble,
-  IconSparkles,
-} from "@tabler/icons-react";
-import Link from "next/link";
-import { useMemo, useState } from "react";
-import { Fundraiser } from "@/types";
-import { useUser } from "@/hooks/user";
-import Header from "@/components/Header";
-import { useForm, isNotEmpty, isInRange } from "@mantine/form";
-import FundraiserPreview from "@/components/FundraiserPreview";
-import useSWRMutation from "swr/mutation";
-import { genericMutationFetcher } from "@/utils/swr-fetcher";
+import { isInRange, isNotEmpty, useForm } from "@mantine/form";
 import { useWallet } from "@solana/wallet-adapter-react";
-import { useRouter } from "next/navigation";
+import {
+  IconSparkles
+} from "@tabler/icons-react";
 import cn from "classnames";
-import { prettyFont } from "@/app/fonts";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
+import useSWRMutation from "swr/mutation";
 
 const TAB_OPTIONS = [
   {
@@ -206,7 +191,7 @@ export default function Page() {
             </div>
           </Grid.Col>
           <Grid.Col span={6} className="flex flex-col pt-[200px]">
-            <Badge variant="light" color="blue" size="lg">
+            <Badge variant="light" color="grape" size="lg">
               Fundraiser
             </Badge>
             <form
