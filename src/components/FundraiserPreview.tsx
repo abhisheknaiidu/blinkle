@@ -1,19 +1,13 @@
-import { Fundraiser } from "@/types";
 import {
-  Badge,
   Button,
   Card,
   Flex,
   Grid,
   Group,
-  Image,
-  NumberFormatter,
   RingProgress,
   Text,
   TextInput,
 } from "@mantine/core";
-import { IconCheck } from "@tabler/icons-react";
-import Link from "next/link";
 
 const FundraiserPreview = ({
   title,

@@ -1,21 +1,12 @@
-import { Fundraiser } from "@/types";
 import {
-  Badge,
   Button,
   Card,
   Flex,
   Grid,
   Group,
-  Image,
-  NumberFormatter,
-  RingProgress,
   Text,
   TextInput,
 } from "@mantine/core";
-import { IconCheck } from "@tabler/icons-react";
-import axios from "axios";
-import Link from "next/link";
-import { useEffect, useState } from "react";
 
 const GitHubPreview = ({
   title,

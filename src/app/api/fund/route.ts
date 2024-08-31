@@ -34,11 +34,11 @@ export async function POST(req: Request) {
 
     let fundId = uuid();
 
-    while (!!userData.funds[fundId]) {
+    while (!!userData.blinks[fundId]) {
       fundId = uuid();
     }
 
-    userData.funds[fundId] = {
+    userData.blinks[fundId] = {
       id: fundId,
       title: body.title,
       description: body.description,

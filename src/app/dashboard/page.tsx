@@ -1,21 +1,12 @@
 "use client";
 
-import {
-  Button,
-  Grid,
-  SegmentedControl,
-  Skeleton,
-  Text,
-  Title,
-} from "@mantine/core";
-import Image from "next/image";
-import { IconArrowRight, IconPlus } from "@tabler/icons-react";
-import Link from "next/link";
-import { useMemo, useState } from "react";
-import { Fundraiser } from "@/types";
-import { useUser } from "@/hooks/user";
 import FundraiserCard from "@/components/FundraiserCard";
 import Header from "@/components/Header";
+import { useUser } from "@/hooks/user";
+import { Button, Grid, SegmentedControl, Skeleton, Title } from "@mantine/core";
+import { IconPlus } from "@tabler/icons-react";
+import Link from "next/link";
+import { useMemo, useState } from "react";
 
 const TAB_OPTIONS = [
   {
@@ -36,9 +27,9 @@ export default function Page() {
   const { user, isUserLoading, userError } = useUser();
 
   const funds = useMemo(() => {
-    if (!user?.funds) return [];
+    if (!user?.blinks) return [];
 
-    const allFunds = Object.values(user.funds).reverse();
+    const allFunds = Object.values(user.blinks).reverse();
     if (activeTab === "all") {
       return allFunds;
     } else if (activeTab === "active") {

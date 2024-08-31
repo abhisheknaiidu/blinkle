@@ -6,24 +6,20 @@ import { generateImage } from "@/services/image";
 import { getUserWithInitialization, saveUser } from "@/services/users";
 import { SERVER_BASE_URL } from "@/utils/constants";
 import {
+  ActionGetResponse,
+  ActionPostRequest,
   ActionPostResponse,
   ACTIONS_CORS_HEADERS,
   createPostResponse,
-  ActionGetResponse,
-  ActionPostRequest,
 } from "@solana/actions";
 import {
-  Authorized,
   clusterApiUrl,
   Connection,
-  Keypair,
   LAMPORTS_PER_SOL,
   PublicKey,
-  StakeProgram,
   SystemProgram,
   Transaction,
 } from "@solana/web3.js";
-import { NextApiRequest } from "next";
 import { NextRequest } from "next/server";
 
 export const GET = async (req: NextRequest) => {
@@ -129,7 +125,7 @@ export const POST = async (req: Request) => {
 
     // TODO: Validate txn with cron
     // DOing optimistic update of raised funds for now
-    userData.funds[fundData.id].raised += amount;
+    userData.blinks[fundData.id].raised += amount;
     await saveUser(userData.address, userData);
 
     return Response.json(payload, {
@@ -184,7 +180,7 @@ async function validateUserAndFund(requestUrl: URL) {
     throw "User not found";
   }
 
-  const fundData = userData.funds[fund];
+  const fundData = userData.blinks[fund];
 
   if (!fundData) {
     throw "Fund not found";

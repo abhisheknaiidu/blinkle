@@ -1,16 +1,6 @@
-import { Fundraiser } from "@/types";
+import { Blink } from "@/types";
 import { DIAL_BASE_URL, SERVER_BASE_URL } from "@/utils/constants";
-import {
-  Badge,
-  Button,
-  Card,
-  Grid,
-  Group,
-  Image,
-  NumberFormatter,
-  RingProgress,
-  Text,
-} from "@mantine/core";
+import { Card, Image, Text } from "@mantine/core";
 import { IconCheck, IconProgress } from "@tabler/icons-react";
 import Link from "next/link";
 
@@ -18,7 +8,7 @@ const FundraiserCard = ({
   data,
   userAddress,
 }: {
-  data: Fundraiser;
+  data: Blink;
   userAddress: string;
 }) => {
   const isCompleted = data.raised >= data.goal;

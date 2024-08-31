@@ -10,7 +10,7 @@ export const kvClient = createClient({
 const generateUserKey = (userAddress: string) =>
   `blinkathon-user:${userAddress}`;
 const createDefaultUserData = (address: string): User => ({
-  funds: {},
+  blinks: {},
   address,
 });
 
