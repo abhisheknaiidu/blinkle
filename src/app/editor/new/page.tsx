@@ -159,7 +159,7 @@ export default function Page() {
               </Card>
             </div>
           </Grid.Col>
-          <Grid.Col span={6} className="flex flex-col pt-[100px]">
+          <Grid.Col span={6} className="flex flex-col pt-[140px]">
             <Badge variant="light" color="grape" size="lg">
               Fundraiser
             </Badge>
