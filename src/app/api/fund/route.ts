@@ -1,5 +1,6 @@
 import { getUserWithInitialization, saveUser } from "@/services/users";
-import { NextRequest, NextResponse } from "next/server";
+import { BLINK_TYPE } from "@/types";
+import { NextResponse } from "next/server";
 import { v4 as uuid } from "uuid";
 
 export async function POST(req: Request) {
@@ -12,7 +13,7 @@ export async function POST(req: Request) {
       options: number[];
     };
 
-    for (const key of ["title", "description", "goal", "options"]) {
+    for (const key of ["title", "description", "goal"]) {
       if (!body[key as keyof typeof body]) {
         return NextResponse.json(
           {
@@ -44,8 +45,8 @@ export async function POST(req: Request) {
       description: body.description,
       goal: body.goal,
       raised: 0,
-      options: body.options,
       image: `./test.svg`,
+      type: BLINK_TYPE.FUNDRAISER,
     };
 
     await saveUser(userAddress, userData);

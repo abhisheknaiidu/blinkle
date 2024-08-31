@@ -20,7 +20,7 @@ export type DripBlink = {
   avatar: string;
   name: string;
   description: string;
-  goal: number;
+  raised: number;
   type: BLINK_TYPE.DRIP;
 };
 
@@ -31,7 +31,6 @@ export type FundraiserBlink = {
   image: string;
   raised: number;
   goal: number;
-  options: number[];
   type: BLINK_TYPE.FUNDRAISER;
 };
 

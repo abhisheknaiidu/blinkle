@@ -4,6 +4,7 @@
 
 import { generateImage } from "@/services/image";
 import { getUserWithInitialization, saveUser } from "@/services/users";
+import { BLINK_TYPE } from "@/types";
 import { SERVER_BASE_URL } from "@/utils/constants";
 import {
   ActionGetResponse,
@@ -22,6 +23,8 @@ import {
 } from "@solana/web3.js";
 import { NextRequest } from "next/server";
 
+const DEFAULT_DONATE_OPTIONS = [0.01, 0.1, 1];
+
 export const GET = async (req: NextRequest) => {
   try {
     const requestUrl = new URL(req.url);
@@ -39,7 +42,7 @@ export const GET = async (req: NextRequest) => {
       description: fundData.description,
       label: "Transfer", // this value will be ignored since `links.actions` exists
       links: {
-        actions: fundData.options.map((amount, index) => ({
+        actions: DEFAULT_DONATE_OPTIONS.map((amount, index) => ({
           label: `${amount} SOL`,
           href: `${baseHref}&amount=${amount}`,
         })),
@@ -124,7 +127,7 @@ export const POST = async (req: Request) => {
     });
 
     // TODO: Validate txn with cron
-    // DOing optimistic update of raised funds for now
+    // Doing optimistic update of raised funds for now
     userData.blinks[fundData.id].raised += amount;
     await saveUser(userData.address, userData);
 
@@ -180,14 +183,14 @@ async function validateUserAndFund(requestUrl: URL) {
     throw "User not found";
   }
 
-  const fundData = userData.blinks[fund];
+  const blinkData = userData.blinks[fund];
 
-  if (!fundData) {
+  if (!blinkData || blinkData.type !== BLINK_TYPE.FUNDRAISER) {
     throw "Fund not found";
   }
 
   return {
     userData,
-    fundData,
+    fundData: blinkData,
   };
 }

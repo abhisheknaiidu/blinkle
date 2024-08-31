@@ -9,17 +9,16 @@ import {
   Card,
   Flex,
   Grid,
+  NumberInput,
+  Textarea,
   TextInput,
-  Title
+  Title,
 } from "@mantine/core";
 import { isInRange, isNotEmpty, useForm } from "@mantine/form";
 import { useWallet } from "@solana/wallet-adapter-react";
-import {
-  IconSparkles
-} from "@tabler/icons-react";
+import { IconSparkles } from "@tabler/icons-react";
 import cn from "classnames";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
 import useSWRMutation from "swr/mutation";
 
 const TAB_OPTIONS = [
@@ -41,26 +40,18 @@ type FormValues = {
   title: string;
   description: string;
   goal: number;
-  option1: number;
-  option2: number;
-  option3: number;
 };
 
 export default function Page() {
   const { publicKey } = useWallet();
   const router = useRouter();
 
-  const [activeTab, setActiveTab] = useState(TAB_OPTIONS[0].value);
-  // const { mutateUser } = useUser();
   const form = useForm<FormValues>({
     mode: "controlled",
     initialValues: {
       title: "",
       description: "",
-      goal: 0,
-      option1: 0.01,
-      option2: 0.1,
-      option3: 1,
+      goal: 1,
     },
 
     validate: {
@@ -72,27 +63,6 @@ export default function Page() {
           max: 200,
         },
         "Goal must be between 1 and 200 SOL"
-      ),
-      option1: isInRange(
-        {
-          min: 0.01,
-          max: 10,
-        },
-        "Option must be between 0.01 and 10 SOL"
-      ),
-      option2: isInRange(
-        {
-          min: 0.01,
-          max: 10,
-        },
-        "Option must be between 0.01 and 10 SOL"
-      ),
-      option3: isInRange(
-        {
-          min: 0.01,
-          max: 10,
-        },
-        "Option must be between 0.01 and 10 SOL"
       ),
     },
   });
@@ -111,7 +81,6 @@ export default function Page() {
             title: values.title,
             description: values.description,
             goal: values.goal,
-            options: [values.option1, values.option2, values.option3],
           },
           {
             headers: {
@@ -190,15 +159,15 @@ export default function Page() {
               </Card>
             </div>
           </Grid.Col>
-          <Grid.Col span={6} className="flex flex-col pt-[200px]">
+          <Grid.Col span={6} className="flex flex-col pt-[100px]">
             <Badge variant="light" color="grape" size="lg">
               Fundraiser
             </Badge>
             <form
-              className="flex flex-col gap-4 py-20 pt-5  pr-4"
+              className="flex flex-col gap-4 py-20 pt-5 pr-4"
               onSubmit={form.onSubmit(handleOnSubmit)}
             >
-              <input
+              {/* <input
                 placeholder="Enter Title"
                 className="w-full border text-slate-600 border-[#0202271A] bg-[#EBE4F1] rounded-[14px] pretty uppercase focus:outline-none focus:border-gray-900 py-3 px-4"
                 {...form.getInputProps("title")}
@@ -208,6 +177,34 @@ export default function Page() {
                 rows={5}
                 className="w-full border text-slate-600 border-[#0202271A] bg-[#EBE4F1] rounded-[14px] focus:outline-none focus:border-gray-900 py-3 px-4"
                 {...form.getInputProps("description")}
+              /> */}
+              <TextInput
+                size="xl"
+                className={prettyFont.className}
+                placeholder="Enter Title"
+                bg="transparent"
+                styles={{
+                  input: prettyFont.style,
+                }}
+                {...form.getInputProps("title")}
+              />
+              <Textarea
+                size="md"
+                placeholder="Enter Description"
+                bg="none"
+                styles={{
+                  input: {
+                    minHeight: 160,
+                    padding: "10px 14px",
+                  },
+                }}
+                {...form.getInputProps("description")}
+              />
+              <NumberInput
+                w={140}
+                size="md"
+                placeholder="Enter Goal"
+                {...form.getInputProps("goal")}
               />
 
               <Flex>
