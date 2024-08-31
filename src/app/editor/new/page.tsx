@@ -2,9 +2,11 @@
 
 import {
   ActionIcon,
+  Badge,
   Button,
   Card,
   Divider,
+  Flex,
   Grid,
   NumberInput,
   SegmentedControl,
@@ -15,7 +17,12 @@ import {
   Title,
 } from "@mantine/core";
 import Image from "next/image";
-import { IconArrowBack, IconArrowRight, IconBubble } from "@tabler/icons-react";
+import {
+  IconArrowBack,
+  IconArrowRight,
+  IconBubble,
+  IconSparkles,
+} from "@tabler/icons-react";
 import Link from "next/link";
 import { useMemo, useState } from "react";
 import { Fundraiser } from "@/types";
@@ -27,6 +34,8 @@ import useSWRMutation from "swr/mutation";
 import { genericMutationFetcher } from "@/utils/swr-fetcher";
 import { useWallet } from "@solana/wallet-adapter-react";
 import { useRouter } from "next/navigation";
+import cn from "classnames";
+import { prettyFont } from "@/app/fonts";
 
 const TAB_OPTIONS = [
   {
@@ -138,7 +147,10 @@ export default function Page() {
       <Header />
       <div className="flex flex-col w-full">
         <Title
-          className="text-[#020227] text-[32px] mt-4 mb-2 pretty uppercase"
+          className={cn(
+            "text-[#020227] text-[32px] mt-4 mb-2 uppercase",
+            prettyFont.className
+          )}
           order={2}
         >
           Create blink
@@ -146,10 +158,10 @@ export default function Page() {
         <div className="text-sm uppercase text-[#010126]">
           EXPLORE ALL YOUR FUNDRAISERS, GITHUB PROFILES, DRIP, ETC
         </div>
-        <Grid>
-          <Grid.Col span={6}>
+        <Grid gutter={32}>
+          <Grid.Col span="content">
             <div className="flex flex-col gap-4 items-center py-16">
-              <Title order={3}>Preview</Title>
+              {/* <Title order={3}>Preview</Title> */}
               <Card
                 shadow="none"
                 padding="lg"
@@ -164,13 +176,19 @@ export default function Page() {
                     position: "relative",
                     minHeight: "462px",
                     background: "#8F00FF",
+                    boxShadow: "0px 10px 29.645px 0px #EBE4F1 inset",
                   }}
                 >
-                  <div className="text-[27px] pretty uppercase leading-[41px] px-[30px] text-center pt-[55px] pb-[10px] text-white relative opacity-80">
+                  <div
+                    className={cn(
+                      prettyFont.className,
+                      "text-[24px] pretty uppercase leading-[41px] px-8 text-center pt-[80px] pb-[10px] text-white relative opacity-80"
+                    )}
+                  >
                     {form.values?.title || "Untitled"}
                   </div>
 
-                  <div className="px-[30px] text-[16px] leading-[18px] text-center text-[#fbf8f8]">
+                  <div className="px-16 text-[16px] leading-[18px] text-center text-[#fbf8f8] opacity-60 font-light">
                     {form.values.description}
                   </div>
                 </Card.Section>
@@ -188,35 +206,36 @@ export default function Page() {
             </div>
           </Grid.Col>
           <Grid.Col span={6} className="flex flex-col pt-[200px]">
-            <div className="rounded-[23px] w-[15%] bg-[#C5DEFF] py-[6px] px-[14px]">
-              <div className="text-[#16509E] text-[12px] leading-[14px]">
-                Fundraiser
-              </div>
-            </div>
+            <Badge variant="light" color="blue" size="lg">
+              Fundraiser
+            </Badge>
             <form
               className="flex flex-col gap-4 py-20 pt-5  pr-4"
               onSubmit={form.onSubmit(handleOnSubmit)}
             >
               <input
-                placeholder="enter title"
-                className="w-full border border-[#0202271A] bg-[#EBE4F1] rounded-[10px] pretty uppercase focus:outline-none focus:border-gray-900 py-3 px-4"
+                placeholder="Enter Title"
+                className="w-full border text-slate-600 border-[#0202271A] bg-[#EBE4F1] rounded-[14px] pretty uppercase focus:outline-none focus:border-gray-900 py-3 px-4"
                 {...form.getInputProps("title")}
               />
               <textarea
-                placeholder="enter description"
+                placeholder="Enter Description"
                 rows={5}
-                className="w-full border border-[#0202271A] bg-[#EBE4F1] rounded-[10px] focus:outline-none focus:border-gray-900 py-3 px-4"
+                className="w-full border text-slate-600 border-[#0202271A] bg-[#EBE4F1] rounded-[14px] focus:outline-none focus:border-gray-900 py-3 px-4"
                 {...form.getInputProps("description")}
               />
 
-              <Button
-                size="md"
-                type="submit"
-                className="w-[200px] py-[5px] px-[15px] bg-[#0F0906]"
-                loading={isMutating}
-              >
-                Create
-              </Button>
+              <Flex>
+                <Button
+                  size="md"
+                  type="submit"
+                  className="py-[10px] px-[20px] bg-[#0F0906]"
+                  loading={isMutating}
+                  leftSection={<IconSparkles size={20} />}
+                >
+                  Create
+                </Button>
+              </Flex>
             </form>
           </Grid.Col>
         </Grid>
