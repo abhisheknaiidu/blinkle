@@ -28,7 +28,7 @@ export async function POST(request: Request) {
       // Filter images that do not have 'object-center' in their class list
       for (let img of imgElements) {
         if (!img.classList.contains("object-center")) {
-          return img.src;
+          return img.getAttribute("src");
         }
       }
       return null;
