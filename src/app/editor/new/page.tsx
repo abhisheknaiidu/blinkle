@@ -68,7 +68,7 @@ export default function Page() {
   });
 
   const { trigger, isMutating } = useSWRMutation(
-    "/api/fund",
+    "/api/blinks/fundraiser",
     genericMutationFetcher
   );
 
