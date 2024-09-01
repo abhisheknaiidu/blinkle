@@ -1,16 +1,17 @@
 "use client";
 
-import { Button, Card, Grid, Text, TextInput, Title } from "@mantine/core";
-import { useState } from "react";
+import { prettyFont } from "@/app/fonts";
 import Header from "@/components/Header";
-import { useForm, isNotEmpty, isInRange } from "@mantine/form";
-import useSWRMutation from "swr/mutation";
+import { BLINK_TYPE } from "@/types";
 import { genericMutationFetcher } from "@/utils/swr-fetcher";
+import { Button, Card, Grid, Text, TextInput, Title } from "@mantine/core";
 import { useWallet } from "@solana/wallet-adapter-react";
-import { useRouter } from "next/navigation";
-import axios from "axios";
+import cn from "classnames";
 import clsx from "clsx";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
 import { toast } from "sonner";
+import useSWRMutation from "swr/mutation";
 
 const TAB_OPTIONS = [
   {
@@ -52,54 +53,8 @@ export default function Page() {
     perksContent: "",
   });
 
-  // const { mutateUser } = useUser();
-  const form = useForm<FormValues>({
-    mode: "controlled",
-    initialValues: {
-      title: "",
-      description: "",
-      goal: 0,
-      option1: 0.01,
-      option2: 0.1,
-      option3: 1,
-    },
-
-    validate: {
-      title: isNotEmpty("Title is required"),
-      description: isNotEmpty("Description is required"),
-      goal: isInRange(
-        {
-          min: 1,
-          max: 200,
-        },
-        "Goal must be between 1 and 200 SOL"
-      ),
-      option1: isInRange(
-        {
-          min: 0.01,
-          max: 10,
-        },
-        "Option must be between 0.01 and 10 SOL"
-      ),
-      option2: isInRange(
-        {
-          min: 0.01,
-          max: 10,
-        },
-        "Option must be between 0.01 and 10 SOL"
-      ),
-      option3: isInRange(
-        {
-          min: 0.01,
-          max: 10,
-        },
-        "Option must be between 0.01 and 10 SOL"
-      ),
-    },
-  });
-
   const { trigger, isMutating } = useSWRMutation(
-    "/api/fund",
+    "/api/blinks",
     genericMutationFetcher
   );
 
@@ -127,16 +82,17 @@ export default function Page() {
     }
   };
 
-  const handleOnSubmit = async (values: FormValues) => {
+  const handleOnSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
     try {
       await trigger({
         type: "post",
         rest: [
           {
-            title: values.title,
-            description: values.description,
-            goal: values.goal,
-            options: [values.option1, values.option2, values.option3],
+            title: userData?.title,
+            description: userData?.perksContent,
+            type: BLINK_TYPE.DRIP,
+            avatar: userData?.avatar_url,
           },
           {
             headers: {
@@ -257,13 +213,13 @@ export default function Page() {
                 DRIP
               </div>
             </div>
-            <form
-              className="flex flex-col gap-4 py-20 pt-5  pr-4"
-              onSubmit={form.onSubmit(handleOnSubmit)}
-            >
+            <div className="flex flex-col gap-4 py-20 pt-5  pr-4">
               <div className="flex space-x-3 items-center">
                 <input
-                  className="w-full border border-[#0202271A] bg-[#EBE4F1] rounded-[10px] pretty uppercase focus:outline-none focus:border-gray-900 py-3 px-4"
+                  className={cn(
+                    "w-full border border-[#0202271A] bg-[#EBE4F1] rounded-[10px] uppercase focus:outline-none focus:border-gray-900 py-3 px-4",
+                    prettyFont.className
+                  )}
                   onChange={(e) => setUsername(e.target.value)}
                 />
 
@@ -282,10 +238,11 @@ export default function Page() {
                 type="submit"
                 className="w-[200px] py-[5px] px-[15px] bg-[#0F0906]"
                 loading={isMutating}
+                onClick={() => handleOnSubmit}
               >
                 Create
               </Button>
-            </form>
+            </div>
           </Grid.Col>
         </Grid>
       </div>

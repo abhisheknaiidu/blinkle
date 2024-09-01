@@ -2,6 +2,7 @@
 
 import { prettyFont } from "@/app/fonts";
 import Header from "@/components/Header";
+import { BLINK_TYPE } from "@/types";
 import { genericMutationFetcher } from "@/utils/swr-fetcher";
 import {
   Badge,
@@ -9,12 +10,11 @@ import {
   Card,
   Flex,
   Grid,
-  NumberInput,
   Textarea,
   TextInput,
   Title,
 } from "@mantine/core";
-import { isInRange, isNotEmpty, useForm } from "@mantine/form";
+import { isNotEmpty, useForm } from "@mantine/form";
 import { useWallet } from "@solana/wallet-adapter-react";
 import { IconSparkles } from "@tabler/icons-react";
 import cn from "classnames";
@@ -68,7 +68,7 @@ export default function Page() {
   });
 
   const { trigger, isMutating } = useSWRMutation(
-    "/api/blinks/fundraiser",
+    "/api/blinks",
     genericMutationFetcher
   );
 
@@ -80,7 +80,7 @@ export default function Page() {
           {
             title: values.title,
             description: values.description,
-            goal: values.goal,
+            type: BLINK_TYPE.FUNDRAISER,
           },
           {
             headers: {
