@@ -7,6 +7,7 @@ import { BLINK_TYPE } from "@/types";
 import {
   Badge,
   Button,
+  Flex,
   Grid,
   Menu,
   rem,
@@ -120,22 +121,26 @@ export default function Page() {
           </Menu>
         </div>
 
-        <Grid gutter={32} pb={100} mt={20}>
+        <Flex gap={32} direction="column" pt={20}>
           {isUserLoading || userError || !user
-            ? new Array(5).fill(0).map((_, index) => (
-                <Grid.Col key={index} span={12}>
-                  <Skeleton height={200} />
-                </Grid.Col>
-              ))
+            ? new Array(5)
+                .fill(0)
+                .map((_, index) => <Skeleton height={200} key={index} />)
             : funds.map((fundraiser) => (
-                <div className="flex gap-3" key={fundraiser.id}>
-                  <Grid.Col key={fundraiser.id} span={4}>
-                    <FundraiserCard
-                      data={fundraiser}
-                      userAddress={user.address}
-                    />
-                  </Grid.Col>
-                  <div className="flex flex-col mt-6">
+                <div
+                  className="gap-8"
+                  key={fundraiser.id}
+                  style={{
+                    display: "grid",
+                    gridTemplateColumns: "auto 1fr",
+                  }}
+                >
+                  <FundraiserCard
+                    data={fundraiser}
+                    userAddress={user.address}
+                  />
+
+                  <div className="flex flex-col mt-4">
                     <Badge
                       variant="light"
                       color={
@@ -174,7 +179,7 @@ export default function Page() {
                   </div>
                 </div>
               ))}
-        </Grid>
+        </Flex>
       </div>
     </div>
   );

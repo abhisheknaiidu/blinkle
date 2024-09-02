@@ -31,6 +31,8 @@ const FundraiserCard = ({
       style={{
         transition: "all 0.2s ease-out",
       }}
+      h={280}
+      w={280}
     >
       <Card.Section
         // h={160}
