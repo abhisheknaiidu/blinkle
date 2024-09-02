@@ -238,7 +238,7 @@ export default function Page() {
               <TextInput
                 size="xl"
                 className={prettyFont.className}
-                placeholder="Enter Title"
+                placeholder="Enter Username"
                 bg="transparent"
                 rightSectionWidth="auto"
                 styles={{

@@ -1,19 +1,28 @@
 "use client";
 
-import { Button, Card, Grid, TextInput, Title } from "@mantine/core";
-import { IconArrowBack, IconArrowRight, IconBubble } from "@tabler/icons-react";
-import Link from "next/link";
-import { useMemo, useState } from "react";
+import { prettyFont } from "@/app/fonts";
 import Header from "@/components/Header";
-import { useForm, isNotEmpty, isInRange } from "@mantine/form";
-import useSWRMutation from "swr/mutation";
+import { BLINK_TYPE } from "@/types";
 import { genericMutationFetcher } from "@/utils/swr-fetcher";
+import {
+  Badge,
+  Button,
+  Card,
+  Flex,
+  Grid,
+  TextInput,
+  Title,
+} from "@mantine/core";
+import { isInRange, isNotEmpty, useForm } from "@mantine/form";
 import { useWallet } from "@solana/wallet-adapter-react";
-import { useRouter } from "next/navigation";
-import GitHubPreview from "@/components/GitHubPreview";
+import { IconSparkles } from "@tabler/icons-react";
 import axios from "axios";
-import { toast } from "sonner";
+import cn from "classnames";
 import clsx from "clsx";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
+import { toast } from "sonner";
+import useSWRMutation from "swr/mutation";
 
 const TAB_OPTIONS = [
   {
@@ -104,20 +113,20 @@ export default function Page() {
   });
 
   const { trigger, isMutating } = useSWRMutation(
-    "/api/fund",
+    "/api/blinks",
     genericMutationFetcher
   );
 
-  const handleOnSubmit = async (values: FormValues) => {
+  const handleOnSubmit = async () => {
     try {
       await trigger({
         type: "post",
         rest: [
           {
-            title: values.title,
-            description: values.description,
-            goal: values.goal,
-            options: [values.option1, values.option2, values.option3],
+            title: userData?.name,
+            description: "@" + username + "\n" + (userData?.bio || ""),
+            type: BLINK_TYPE.DRIP,
+            avatar: userData?.avatar_url,
           },
           {
             headers: {
@@ -139,7 +148,7 @@ export default function Page() {
       const response = await axios.get(`/api/github-user?username=${username}`);
       setUserData(response.data);
     } catch (err) {
-      toast.error("enter correct drip username");
+      toast.error("enter correct github username");
     } finally {
       setLoading(false);
     }
@@ -150,7 +159,10 @@ export default function Page() {
       <Header />
       <div className="flex flex-col w-full">
         <Title
-          className="text-[#020227] text-[32px] mt-4 mb-2 pretty uppercase"
+          className={cn(
+            "text-[#020227] text-[32px] mt-4 mb-2 uppercase",
+            prettyFont.className
+          )}
           order={2}
         >
           Create blink
@@ -160,7 +172,7 @@ export default function Page() {
         </div>
         <Grid>
           <Grid.Col span={6}>
-            <div className="flex flex-col gap-4 items-center py-16">
+            <div className="flex flex-col items-center gap-4 py-16">
               <Title order={3}>Preview</Title>
               <Card
                 className={clsx({ "animate-pulse": loading })}
@@ -200,7 +212,12 @@ export default function Page() {
                       backgroundColor: "rgba(0, 0, 0, 0.4)",
                     }}
                   ></div>
-                  <div className="text-[27px] pretty uppercase leading-[41px] px-[30px] pt-[55px] pb-1 text-white relative opacity-80">
+                  <div
+                    className={cn(
+                      prettyFont.className,
+                      "text-[27px] uppercase leading-[41px] px-[30px] pt-[55px] pb-1 text-white relative opacity-80"
+                    )}
+                  >
                     {userData?.name || "Untitled"}
                   </div>
 
@@ -224,16 +241,14 @@ export default function Page() {
             </div>
           </Grid.Col>
           <Grid.Col span={6} className="flex flex-col pt-[200px]">
-            <div className="rounded-[23px] w-[14%] bg-[#C5DEFF] py-[6px] px-[14px]">
-              <div className="text-[#16509E] text-[12px] leading-[14px] uppercase">
-                github
-              </div>
-            </div>
-            <form
-              className="flex flex-col gap-4 py-20 pt-5  pr-4"
-              onSubmit={form.onSubmit(handleOnSubmit)}
+            <Badge variant="light" color="blue" size="lg">
+              GitHub
+            </Badge>
+            <div
+              className="flex flex-col gap-4 py-20 pt-5 pr-4"
+              // onSubmit={form.onSubmit(handleOnSubmit)}
             >
-              <div className="flex space-x-3 items-center">
+              {/* <div className="flex items-center space-x-3">
                 <input
                   className="w-full border border-[#0202271A] bg-[#EBE4F1] rounded-[10px] pretty uppercase focus:outline-none focus:border-gray-900 py-3 px-4"
                   onChange={(e) => setUsername(e.target.value)}
@@ -247,17 +262,44 @@ export default function Page() {
                 >
                   validate
                 </Button>
-              </div>
+              </div> */}
+              <TextInput
+                size="xl"
+                className={prettyFont.className}
+                placeholder="Enter Username"
+                bg="transparent"
+                rightSectionWidth="auto"
+                styles={{
+                  input: prettyFont.style,
+                  // root: { width},
+                }}
+                rightSection={
+                  <Button
+                    size="sm"
+                    className="py-[5px] px-[15px] bg-[#0F0906]"
+                    onClick={handleFetchUserData}
+                    loading={loading}
+                    mr={10}
+                  >
+                    validate
+                  </Button>
+                }
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+              />
 
-              <Button
-                size="md"
-                type="submit"
-                className="w-[200px] py-[5px] px-[15px] bg-[#0F0906]"
-                loading={isMutating}
-              >
-                Create
-              </Button>
-            </form>
+              <Flex>
+                <Button
+                  size="md"
+                  className="py-[10px] px-[20px] bg-[#0F0906]"
+                  loading={isMutating}
+                  leftSection={<IconSparkles size={20} />}
+                  onClick={handleOnSubmit}
+                >
+                  Create
+                </Button>
+              </Flex>
+            </div>
           </Grid.Col>
         </Grid>
       </div>
