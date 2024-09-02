@@ -114,7 +114,7 @@ export default function Page() {
         </div>
         <Grid gutter={32}>
           <Grid.Col span="content">
-            <div className="flex flex-col gap-4 items-center py-16">
+            <div className="flex flex-col items-center gap-4 py-16">
               {/* <Title order={3}>Preview</Title> */}
               <Card
                 shadow="none"
