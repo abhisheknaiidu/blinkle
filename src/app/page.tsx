@@ -29,7 +29,7 @@ export default function Page() {
         <Header />
       </motion.div>
       <div
-        className="grid gap-20 content-center items-center grid-rows-1 py-20 pt-12 w-full"
+        className="grid items-center content-center w-full grid-rows-1 gap-20 py-20 pt-12"
         style={{
           gridTemplateColumns: "auto 1fr",
           height: "calc(100dvh - 5rem)",
@@ -63,9 +63,9 @@ export default function Page() {
           </Title>
           <Flex direction="column" gap={28}>
             <Text tt="uppercase" c="dimmed" size="sm">
-              Dive into the fascinating world of BONK Coin with decks crafted by
-              AI to cater to your interests. Our platform empowers everyone to
-              learn and grow together
+              designed for creators and developers to create real-time
+              &rsquo;blinks&rsquo;. this platform is your gateway to instant
+              content creation and sharing
             </Text>
             <Flex gap={12}>
               <Button
@@ -102,7 +102,7 @@ export default function Page() {
             <Image
               src={FundraiserImage}
               alt="Fundraiser"
-              className="rounded-3xl h-full"
+              className="h-full rounded-3xl"
             />
           </motion.div>
           <motion.div
