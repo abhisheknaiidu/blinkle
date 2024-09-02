@@ -125,7 +125,7 @@ export default function Page() {
           {
             title: userData?.name,
             description: "@" + username + "\n" + (userData?.bio || ""),
-            type: BLINK_TYPE.DRIP,
+            type: BLINK_TYPE.GITHUB,
             avatar: userData?.avatar_url,
           },
           {

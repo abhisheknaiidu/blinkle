@@ -22,7 +22,7 @@ const FundraiserCard = ({
     <Card
       shadow="none"
       padding="md"
-      radius="md"
+      radius="xl"
       component={Link}
       href={{
         pathname: DIAL_BASE_URL,
@@ -53,49 +53,6 @@ const FundraiserCard = ({
           }}
         />
       </Card.Section>
-
-      <div
-        className="grid gap-3 pt-4 pb-3 items-center"
-        style={{
-          gridTemplateColumns: "auto 1fr",
-        }}
-      >
-        {/* <RingProgress
-          size={36}
-          thickness={4}
-          roundCaps
-          sections={[
-            {
-              value: (data.raised / data.goal) * 100,
-              color: isCompleted ? "green" : "green",
-            },
-          ]}
-          label={
-            isCompleted ? (
-              <div className="ml-0.5">
-                <IconCheck size={16} color="green" stroke={3} />
-              </div>
-            ) : undefined
-          }
-        /> */}
-        {isCompleted ? (
-          <IconCheck size={16} color="green" stroke={3} />
-        ) : (
-          <IconProgress size={16} color="orange" stroke={3} />
-        )}
-
-        <Text fw={500} lineClamp={1} ta="start">
-          {data.title}
-        </Text>
-      </div>
-
-      <Text size="sm" c="dimmed" lineClamp={2}>
-        {data.description}
-      </Text>
-
-      {/* <Button fullWidth mt="md" radius="md">
-        Book classic tour now
-      </Button> */}
     </Card>
   );
 };
