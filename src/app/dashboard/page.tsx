@@ -10,12 +10,14 @@ import {
   Grid,
   SegmentedControl,
   Skeleton,
+  Text,
   Title,
 } from "@mantine/core";
 import { IconPlus } from "@tabler/icons-react";
 import Link from "next/link";
 import { useMemo, useState } from "react";
 import { prettyFont } from "../fonts";
+import { BLINK_TYPE } from "@/types";
 
 const TAB_OPTIONS = [
   {
@@ -39,20 +41,15 @@ export default function Page() {
     if (!user?.blinks) return [];
 
     const allFunds = Object.values(user.blinks).reverse();
-    if (activeTab === "all") {
-      return allFunds;
-    } else if (activeTab === "active") {
-      return allFunds.filter((fund) => fund.raised < fund.goal);
-    } else {
-      return allFunds.filter((fund) => fund.raised >= fund.goal);
-    }
+
+    return allFunds;
   }, [user, activeTab]);
 
   return (
     <div className="min-h-[100vh] mx-auto max-w-4xl items-center flex flex-col gap-5">
       <Header />
       <div className="flex flex-col w-full gap-4">
-        <div className="flex gap-4 justify-between">
+        <div className="flex justify-between gap-4">
           <div className="">
             <Title
               // className="text-[#020227]  mb-2 pretty uppercase"
@@ -64,9 +61,9 @@ export default function Page() {
             >
               Dashboard
             </Title>{" "}
-            <div className="text-sm uppercase text-[#010126]">
+            <Text className="text-sm uppercase text-[#020227] opacity-40">
               EXPLORE ALL YOUR FUNDRAISERS, GITHUB PROFILES, DRIP, ETC
-            </div>
+            </Text>
           </div>
 
           <Button
@@ -79,7 +76,7 @@ export default function Page() {
           </Button>
         </div>
 
-        <Grid gutter={16} pb={100}>
+        <Grid gutter={32} pb={100} mt={20}>
           {isUserLoading || userError || !user
             ? new Array(5).fill(0).map((_, index) => (
                 <Grid.Col key={index} span={12}>
@@ -87,7 +84,7 @@ export default function Page() {
                 </Grid.Col>
               ))
             : funds.map((fundraiser) => (
-                <div className="flex gap-3">
+                <div className="flex gap-3" key={fundraiser.id}>
                   <Grid.Col key={fundraiser.id} span={4}>
                     <FundraiserCard
                       data={fundraiser}
@@ -95,24 +92,41 @@ export default function Page() {
                     />
                   </Grid.Col>
                   <div className="flex flex-col mt-6">
-                    <div className="rounded-[23px] w-[14%] table bg-[#C5DEFF] py-[6px] px-[14px]">
-                      <div className="text-[#16509E] text-[12px] leading-[14px] uppercase">
-                        {fundraiser.type}
-                      </div>
-                    </div>
+                    <Badge
+                      variant="light"
+                      color={
+                        fundraiser.type === BLINK_TYPE.FUNDRAISER
+                          ? "grape"
+                          : fundraiser.type === BLINK_TYPE.DRIP
+                          ? "pink"
+                          : fundraiser.type === BLINK_TYPE.GITHUB
+                          ? "blue"
+                          : "dark"
+                      }
+                      mt={20}
+                      size="lg"
+                    >
+                      {fundraiser.type}
+                    </Badge>
                     <Title
                       className={cn(
-                        "text-[#020227] text-[26px] leading-[39px] mt-4 mb-2 uppercase",
+                        "text-[#020227] text-[26px] leading-[39px] mt-3 mb-1 uppercase",
                         prettyFont.className
                       )}
                       order={2}
+                      c="#020227"
                     >
                       {fundraiser.title}
                     </Title>
-                    <div className="text-[16px] leading-[18px] text-[#010126]">
+                    <Text size="sm" c="#020227" opacity={0.4}>
                       {fundraiser.description}
-                    </div>
-                    <div className="mt-10">{`Crowdsrourced: ${fundraiser.raised}`}</div>
+                    </Text>
+                    <Text mt={16} opacity={0.6} c="#020227">
+                      {"Raised: "}
+                      <Text span fw={600}>
+                        {fundraiser.raised} SOL
+                      </Text>
+                    </Text>
                   </div>
                 </div>
               ))}
