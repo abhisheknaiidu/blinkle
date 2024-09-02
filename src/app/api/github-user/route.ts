@@ -5,7 +5,7 @@ import { NextRequest, NextResponse } from "next/server";
 export async function GET(req: NextRequest) {
   const { searchParams } = new URL(req.url);
   const username = searchParams.get("username");
-  const token = process.env.NEXT_PUBLIC_GITHUB_TOKEN;
+  const token = process.env.GITHUB_TOKEN;
 
   console.log("usrename", username, token);
 
@@ -21,7 +21,7 @@ export async function GET(req: NextRequest) {
       `https://api.github.com/users/${username}`,
       {
         headers: {
-          Authorization: `bearer ${token}`,
+          // Authorization: `bearer ${token}`,
           //   Accept: "application/vnd.github+json",
         },
       }
