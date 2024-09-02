@@ -13,6 +13,7 @@ import {
   createPostResponse,
 } from "@solana/actions";
 import {
+  Cluster,
   clusterApiUrl,
   Connection,
   LAMPORTS_PER_SOL,
@@ -88,7 +89,10 @@ export const POST = async (req: Request) => {
     }
 
     const connection = new Connection(
-      process.env.SOLANA_RPC! || clusterApiUrl("devnet")
+      process.env.SOLANA_RPC! ||
+        clusterApiUrl(
+          (process.env.NEXT_PUBLIC_WALLET_ENV as Cluster) || "devnet"
+        )
     );
 
     // ensure the receiving account will be rent exempt
