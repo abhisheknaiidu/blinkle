@@ -11,13 +11,8 @@ const FundraiserCard = ({
   data: Blink;
   userAddress: string;
 }) => {
-  const isCompleted = data.raised >= data.goal;
-  const solanaUrl = `solana-action:${SERVER_BASE_URL}api/actions/funds?user=${userAddress}&fund=${data.id}`;
-  console.log(
-    decodeURIComponent(
-      "solana-action%3Ahttps%3A%2F%2F2304-49-207-201-77.ngrok-free.app%2Fapi%2Factions%2Ffunds%3Fuser%3D5sy3ayWTWE7bnXBhrRThTo722q67mzo7T8m43Kk6Y2wr%26fund%3D1df41412-8912-4678-9411-57139d8e9276"
-    )
-  );
+  const solanaUrl = `solana-action:${SERVER_BASE_URL}api/actions/blinks?user=${userAddress}&blink=${data.id}`;
+
   return (
     <Card
       shadow="none"
