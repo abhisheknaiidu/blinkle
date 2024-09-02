@@ -4,8 +4,18 @@ import { prettyFont } from "@/app/fonts";
 import Header from "@/components/Header";
 import { BLINK_TYPE } from "@/types";
 import { genericMutationFetcher } from "@/utils/swr-fetcher";
-import { Button, Card, Grid, Text, TextInput, Title } from "@mantine/core";
+import {
+  Badge,
+  Button,
+  Card,
+  Flex,
+  Grid,
+  Text,
+  TextInput,
+  Title,
+} from "@mantine/core";
 import { useWallet } from "@solana/wallet-adapter-react";
+import { IconSparkles } from "@tabler/icons-react";
 import cn from "classnames";
 import clsx from "clsx";
 import { useRouter } from "next/navigation";
@@ -27,15 +37,6 @@ const TAB_OPTIONS = [
     value: "completed",
   },
 ];
-
-type FormValues = {
-  title: string;
-  description: string;
-  goal: number;
-  option1: number;
-  option2: number;
-  option3: number;
-};
 
 export default function Page() {
   const { publicKey } = useWallet();
@@ -82,8 +83,7 @@ export default function Page() {
     }
   };
 
-  const handleOnSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+  const handleOnSubmit = async () => {
     try {
       await trigger({
         type: "post",
@@ -113,7 +113,10 @@ export default function Page() {
       <Header />
       <div className="flex flex-col w-full">
         <Title
-          className="text-[#020227] text-[32px] mt-4 mb-2 pretty uppercase"
+          className={cn(
+            "text-[#020227] text-[32px] mt-4 mb-2 uppercase",
+            prettyFont.className
+          )}
           order={2}
         >
           Create blink
@@ -123,7 +126,7 @@ export default function Page() {
         </div>
         <Grid>
           <Grid.Col span={6}>
-            <div className="flex flex-col gap-4 items-center py-16">
+            <div className="flex flex-col items-center gap-4 py-16">
               <Title order={3}>Preview</Title>
               <Card
                 className={clsx({ "animate-pulse": loading })}
@@ -136,7 +139,7 @@ export default function Page() {
                 }}
               >
                 <Card.Section
-                  bg="green.1"
+                  // bg="transparent"
                   style={{
                     position: "relative",
                     minHeight: "462px",
@@ -149,7 +152,11 @@ export default function Page() {
                       : "none",
                     backgroundColor: userData?.avatar_url
                       ? "transparent"
-                      : "green",
+                      : "purple",
+                    // apply background blur if image
+                    // filter: userData?.avatar_url
+                    //   ? "blur(10px)"
+                    //   : "none",
                     animation: loading ? "animate-pulse 2s infinite" : "none",
                   }}
                 >
@@ -161,14 +168,31 @@ export default function Page() {
                       right: 0,
                       bottom: 0,
                       backgroundColor: "rgba(0, 0, 0, 0.6)",
+                      // zIndex: -1,
                     }}
                   ></div>
-                  <div className="text-[27px] pretty uppercase leading-[41px] px-[30px] pt-[55px] pb-1 text-white relative opacity-80">
+                  <div
+                    className={cn(
+                      "text-[27px] uppercase leading-[41px] px-[30px] pt-[55px] pb-1 text-white relative opacity-80",
+                      prettyFont.className
+                    )}
+                  >
                     {userData?.title || "Untitled"}
                   </div>
 
-                  <div className="flex h-full items-center justify-center">
-                    <Text size="sm" c="dimmed">
+                  <div className="relative z-10 flex items-center justify-center h-full opacity-70">
+                    <Text
+                      size="sm"
+                      c="gray.0"
+                      className="opacity-100"
+                      lineClamp={6}
+                      truncate
+                      px={30}
+                      style={{
+                        wordBreak: "break-word",
+                        whiteSpace: "pre-line",
+                      }}
+                    >
                       {userData?.perksContent
                         .split("\n\n")
                         .map((segment, index) => {
@@ -177,20 +201,14 @@ export default function Page() {
                           const content = lines.slice(1).join("<br>");
 
                           return (
-                            <div
-                              key={index}
-                              style={{
-                                padding: "5px 30px 20px 30px",
-                                opacity: "60%",
-                                color: "white",
-                              }}
-                            >
-                              <div className="">{title}</div>
-                              <p
-                                className="text-[15px] leading-[17px] text-bold "
-                                dangerouslySetInnerHTML={{ __html: content }}
-                              ></p>
-                            </div>
+                            <>
+                              <Text inherit maw="100%" mt={10}>
+                                {title}
+                              </Text>
+                              <Text inherit maw="100%" opacity={0.7}>
+                                {content}
+                              </Text>
+                            </>
                           );
                         })}
                     </Text>
@@ -208,40 +226,52 @@ export default function Page() {
             </div>
           </Grid.Col>
           <Grid.Col span={6} className="flex flex-col pt-[200px]">
-            <div className="rounded-[23px] w-[12%] bg-[#C5DEFF] py-[6px] px-[14px]">
+            {/* <div className="rounded-[23px] w-[12%] bg-[#C5DEFF] py-[6px] px-[14px]">
               <div className="text-[#16509E] text-[12px] leading-[14px]">
                 DRIP
               </div>
-            </div>
-            <div className="flex flex-col gap-4 py-20 pt-5  pr-4">
-              <div className="flex space-x-3 items-center">
-                <input
-                  className={cn(
-                    "w-full border border-[#0202271A] bg-[#EBE4F1] rounded-[10px] uppercase focus:outline-none focus:border-gray-900 py-3 px-4",
-                    prettyFont.className
-                  )}
-                  onChange={(e) => setUsername(e.target.value)}
-                />
+            </div> */}
+            <Badge variant="light" color="pink" size="lg">
+              DRiP
+            </Badge>
+            <div className="flex flex-col gap-4 py-20 pt-5 pr-4">
+              <TextInput
+                size="xl"
+                className={prettyFont.className}
+                placeholder="Enter Title"
+                bg="transparent"
+                rightSectionWidth="auto"
+                styles={{
+                  input: prettyFont.style,
+                  // root: { width},
+                }}
+                rightSection={
+                  <Button
+                    size="sm"
+                    className="py-[5px] px-[15px] bg-[#0F0906]"
+                    onClick={fetchUserDetails}
+                    loading={loading}
+                    mr={10}
+                  >
+                    validate
+                  </Button>
+                }
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+              />
 
+              <Flex>
                 <Button
-                  size="sm"
-                  className="w-[120px] py-[5px] px-[15px] bg-[#0F0906]"
-                  onClick={fetchUserDetails}
-                  loading={loading}
+                  size="md"
+                  type="submit"
+                  className="py-[10px] px-[20px] bg-[#0F0906]"
+                  loading={isMutating}
+                  leftSection={<IconSparkles size={20} />}
+                  onClick={handleOnSubmit}
                 >
-                  validate
+                  Create
                 </Button>
-              </div>
-
-              <Button
-                size="md"
-                type="submit"
-                className="w-[200px] py-[5px] px-[15px] bg-[#0F0906]"
-                loading={isMutating}
-                onClick={() => handleOnSubmit}
-              >
-                Create
-              </Button>
+              </Flex>
             </div>
           </Grid.Col>
         </Grid>
