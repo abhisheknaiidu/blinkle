@@ -73,7 +73,7 @@ export default function Page() {
                 color="dark"
                 rightSection={<IconBrandGithub height={16} width={16} />}
                 component={Link}
-                href="https://github.com/abhisheknaiidu/blinkathon-shipyard-24"
+                href="https://github.com/abhisheknaiidu/blinkle"
                 target="_blank"
               >
                 Github
@@ -83,7 +83,7 @@ export default function Page() {
                 color="dark"
                 rightSection={<IconBrandX height={16} width={16} />}
                 component={Link}
-                href="https://github.com/abhisheknaiidu/blinkathon-shipyard-24"
+                href="https://x.com/blinkle_xyz"
                 target="_blank"
               >
                 Twitter
