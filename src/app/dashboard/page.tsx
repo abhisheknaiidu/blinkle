@@ -2,22 +2,28 @@
 
 import FundraiserCard from "@/components/FundraiserCard";
 import Header from "@/components/Header";
-import cn from "classnames";
 import { useUser } from "@/hooks/user";
+import { BLINK_TYPE } from "@/types";
 import {
   Badge,
   Button,
   Grid,
-  SegmentedControl,
+  Menu,
+  rem,
   Skeleton,
   Text,
   Title,
 } from "@mantine/core";
-import { IconPlus } from "@tabler/icons-react";
-import Link from "next/link";
+import {
+  IconBrandGithub,
+  IconDroplet,
+  IconHeartHandshake,
+  IconPlus,
+} from "@tabler/icons-react";
+import cn from "classnames";
 import { useMemo, useState } from "react";
 import { prettyFont } from "../fonts";
-import { BLINK_TYPE } from "@/types";
+import Link from "next/link";
 
 const TAB_OPTIONS = [
   {
@@ -49,7 +55,7 @@ export default function Page() {
     <div className="min-h-[100vh] mx-auto max-w-4xl items-center flex flex-col gap-5">
       <Header />
       <div className="flex flex-col w-full gap-4">
-        <div className="flex justify-between gap-4">
+        <div className="flex items-center justify-between gap-4">
           <div className="">
             <Title
               // className="text-[#020227]  mb-2 pretty uppercase"
@@ -66,14 +72,52 @@ export default function Page() {
             </Text>
           </div>
 
-          <Button
-            variant="light"
-            rightSection={<IconPlus size={20} />}
-            component={Link}
-            href="/editor/new"
-          >
-            Create
-          </Button>
+          <Menu shadow="md" width={200} position="bottom-end">
+            <Menu.Target>
+              <Button
+                variant="filled"
+                color="grape"
+                leftSection={<IconPlus size={20} />}
+              >
+                Create
+              </Button>
+            </Menu.Target>
+
+            <Menu.Dropdown>
+              <Menu.Label>Type</Menu.Label>
+              <Menu.Item
+                leftSection={
+                  <IconHeartHandshake
+                    style={{ width: rem(14), height: rem(14) }}
+                  />
+                }
+                component={Link}
+                href="/editor/new"
+              >
+                Fundraiser
+              </Menu.Item>
+              <Menu.Item
+                leftSection={
+                  <IconBrandGithub
+                    style={{ width: rem(14), height: rem(14) }}
+                  />
+                }
+                component={Link}
+                href="/editor/github"
+              >
+                GitHub
+              </Menu.Item>
+              <Menu.Item
+                leftSection={
+                  <IconDroplet style={{ width: rem(14), height: rem(14) }} />
+                }
+                component={Link}
+                href="/editor/drip"
+              >
+                DRiP
+              </Menu.Item>
+            </Menu.Dropdown>
+          </Menu>
         </div>
 
         <Grid gutter={32} pb={100} mt={20}>
