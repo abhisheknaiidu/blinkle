@@ -14,7 +14,10 @@ export async function POST(request: Request) {
   let browser;
 
   try {
-    browser = await puppeteer.launch();
+    browser = await puppeteer.launch({
+      headless: true,
+      args: ["--no-sandbox", "--disable-setuid-sandbox"],
+    });
     const page = await browser.newPage();
     await page.goto(`https://drip.haus/${userSearch}`, {
       waitUntil: "domcontentloaded",
