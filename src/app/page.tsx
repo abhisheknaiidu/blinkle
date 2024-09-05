@@ -12,8 +12,20 @@ import cn from "classnames";
 import { motion } from "framer-motion";
 import { prettyFont } from "./fonts";
 import Link from "next/link";
+import useScreen from "@/utils/useScreen";
 
 export default function Page() {
+  const isMobile = useScreen();
+  if (isMobile) {
+    return (
+      <div className="min-h-screen bg-purple-600 flex items-center justify-center">
+        <Text className="text-white text-center text-xl font-bold">
+          Dis web app is only for desktop bruv.
+        </Text>
+      </div>
+    );
+  }
+
   return (
     <div
       className="h-[100vh] mx-auto max-w-[80rem] grid grid-cols-1 px-6"
@@ -92,7 +104,7 @@ export default function Page() {
           </Flex>
         </motion.div>
 
-        <div className="h-fit w-full max-w-[42rem] grid grid-cols-2 gap-3 my-auto items-center ml-auto">
+        <div className="h-fit w-full max-w-[42rem] hidden lg:grid grid-cols-2 gap-3 my-auto items-center ml-auto ">
           <motion.div
             className="col-span-2 aspect-[65/35]"
             initial={{ opacity: 0, translateY: 15 }}

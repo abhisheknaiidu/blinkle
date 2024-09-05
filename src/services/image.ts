@@ -36,7 +36,27 @@ export async function generateImage(
 
   // Replace placeholders in the HTML content
   htmlContent = htmlContent.replace(/\{\{title\}\}/g, blink.title);
-  htmlContent = htmlContent.replace(/\{\{description\}\}/g, blink.description);
+  if (blink.type === BLINK_TYPE.DRIP) {
+    // Split and format the description
+    const formattedDescription = blink.description
+      .split("\n\n")
+      .map((segment) => {
+        const lines = segment.split("\n");
+        const title = lines[0];
+        const content = lines.slice(1).join("<br>");
+        return `<p><strong>${title}</strong><br>${content}</p>`;
+      })
+      .join("");
+    htmlContent = htmlContent.replace(
+      /\{\{description\}\}/g,
+      formattedDescription
+    );
+  } else {
+    htmlContent = htmlContent.replace(
+      /\{\{description\}\}/g,
+      blink.description
+    );
+  }
   htmlContent = htmlContent.replace(/\{\{raised\}\}/g, blink.raised.toFixed(2));
   if (blink.type !== BLINK_TYPE.FUNDRAISER && blink.avatar) {
     htmlContent = htmlContent.replace(/\{\{avatar\}\}/g, blink.avatar);

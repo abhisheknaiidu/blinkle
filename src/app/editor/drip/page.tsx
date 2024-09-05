@@ -4,6 +4,7 @@ import { prettyFont } from "@/app/fonts";
 import Header from "@/components/Header";
 import { BLINK_TYPE } from "@/types";
 import { genericMutationFetcher } from "@/utils/swr-fetcher";
+import useScreen from "@/utils/useScreen";
 import {
   Badge,
   Button,
@@ -53,6 +54,7 @@ export default function Page() {
     avatar_url: "",
     perksContent: "",
   });
+  const isMobile = useScreen();
 
   const { trigger, isMutating } = useSWRMutation(
     "/api/blinks",
@@ -108,6 +110,15 @@ export default function Page() {
     }
   };
 
+  if (isMobile) {
+    return (
+      <div className="min-h-screen bg-purple-600 flex items-center justify-center">
+        <Text className="text-white text-center text-xl font-bold">
+          Dis web app is only for desktop bruv.
+        </Text>
+      </div>
+    );
+  }
   return (
     <div className="min-h-[100vh] mx-auto max-w-[1280px] px-[80px] items-center flex flex-col gap-5">
       <Header />
@@ -185,7 +196,7 @@ export default function Page() {
                       size="sm"
                       c="gray.0"
                       className="opacity-100"
-                      lineClamp={6}
+                      lineClamp={10}
                       truncate
                       px={30}
                       style={{
@@ -226,11 +237,6 @@ export default function Page() {
             </div>
           </Grid.Col>
           <Grid.Col span={6} className="flex flex-col pt-[200px]">
-            {/* <div className="rounded-[23px] w-[12%] bg-[#C5DEFF] py-[6px] px-[14px]">
-              <div className="text-[#16509E] text-[12px] leading-[14px]">
-                DRIP
-              </div>
-            </div> */}
             <Badge variant="light" color="pink" size="lg">
               DRiP
             </Badge>
@@ -248,10 +254,16 @@ export default function Page() {
                 rightSection={
                   <Button
                     size="sm"
-                    className="py-[5px] px-[15px] bg-[#0F0906]"
+                    className={clsx(
+                      {
+                        "bg-[#3f3a3a]": !username,
+                      },
+                      "py-[5px] px-[15px] bg-[#0F0906]"
+                    )}
                     onClick={fetchUserDetails}
                     loading={loading}
                     mr={10}
+                    disabled={!username}
                   >
                     validate
                   </Button>
@@ -264,10 +276,16 @@ export default function Page() {
                 <Button
                   size="md"
                   type="submit"
-                  className="py-[10px] px-[20px] bg-[#0F0906]"
+                  className={clsx(
+                    {
+                      "bg-[#3f3a3a]": !username || !userData.title,
+                    },
+                    "py-[10px] px-[20px] bg-[#0F0906]"
+                  )}
                   loading={isMutating}
                   leftSection={<IconSparkles size={20} />}
                   onClick={handleOnSubmit}
+                  disabled={!username || !userData.title}
                 >
                   Create
                 </Button>

@@ -25,6 +25,7 @@ import cn from "classnames";
 import { useMemo, useState } from "react";
 import { prettyFont } from "../fonts";
 import Link from "next/link";
+import useScreen from "@/utils/useScreen";
 
 const TAB_OPTIONS = [
   {
@@ -43,7 +44,7 @@ const TAB_OPTIONS = [
 export default function Page() {
   const [activeTab, setActiveTab] = useState(TAB_OPTIONS[0].value);
   const { user, isUserLoading, userError } = useUser();
-
+  const isMobile = useScreen();
   const funds = useMemo(() => {
     if (!user?.blinks) return [];
 
@@ -52,8 +53,49 @@ export default function Page() {
     return allFunds;
   }, [user, activeTab]);
 
+  const renderDripDescription = (description: string) => {
+    return (
+      <Text
+        size="sm"
+        c="#020227"
+        className="opacity-100"
+        lineClamp={4}
+        truncate
+        style={{
+          wordBreak: "break-word",
+          whiteSpace: "pre-line",
+        }}
+      >
+        {description.split("\n\n").map((segment, index) => {
+          const lines = segment.split("\n");
+          const title = lines[0];
+          const content = lines.slice(1).join("<br>");
+
+          return (
+            <>
+              <Text inherit maw="100%" mt={10}>
+                {title}
+              </Text>
+              <Text inherit maw="100%" opacity={0.7}>
+                {content}
+              </Text>
+            </>
+          );
+        })}
+      </Text>
+    );
+  };
+  if (isMobile) {
+    return (
+      <div className="min-h-screen bg-purple-600 flex items-center justify-center">
+        <Text className="text-white text-center text-xl font-bold">
+          Dis web app is only for desktop bruv.
+        </Text>
+      </div>
+    );
+  }
   return (
-    <div className="min-h-[100vh] mx-auto max-w-4xl items-center flex flex-col gap-5">
+    <div className="min-h-[100vh] mx-auto max-w-4xl px-10 items-center flex flex-col gap-5">
       <Header />
       <div className="flex flex-col w-full gap-4">
         <div className="flex items-center justify-between gap-4">
@@ -168,7 +210,9 @@ export default function Page() {
                       {fundraiser.title}
                     </Title>
                     <Text size="sm" c="#020227" opacity={0.4}>
-                      {fundraiser.description}
+                      {fundraiser.type === BLINK_TYPE.DRIP
+                        ? renderDripDescription(fundraiser.description)
+                        : fundraiser.description}
                     </Text>
                     <Text mt={16} opacity={0.6} c="#020227">
                       {"Raised: "}

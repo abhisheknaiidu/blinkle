@@ -4,12 +4,14 @@ import { prettyFont } from "@/app/fonts";
 import Header from "@/components/Header";
 import { BLINK_TYPE } from "@/types";
 import { genericMutationFetcher } from "@/utils/swr-fetcher";
+import useScreen from "@/utils/useScreen";
 import {
   Badge,
   Button,
   Card,
   Flex,
   Grid,
+  Text,
   TextInput,
   Title,
 } from "@mantine/core";
@@ -55,12 +57,14 @@ type UserDataType = {
   name: string;
   bio: string;
   public_repos: number;
+  location: string;
+  twitter_username: string;
 };
 
 export default function Page() {
   const { publicKey } = useWallet();
   const router = useRouter();
-
+  const isMobile = useScreen();
   const [activeTab, setActiveTab] = useState(TAB_OPTIONS[0].value);
   const [username, setUsername] = useState("");
   const [userData, setUserData] = useState<UserDataType>();
@@ -153,7 +157,15 @@ export default function Page() {
       setLoading(false);
     }
   };
-
+  if (isMobile) {
+    return (
+      <div className="min-h-screen bg-purple-600 flex items-center justify-center">
+        <Text className="text-white text-center text-xl font-bold">
+          Dis web app is only for desktop bruv.
+        </Text>
+      </div>
+    );
+  }
   return (
     <div className="min-h-[100vh] mx-auto max-w-[1280px] px-[80px] items-center flex flex-col gap-5">
       <Header />
@@ -209,7 +221,7 @@ export default function Page() {
                       left: 0,
                       right: 0,
                       bottom: 0,
-                      backgroundColor: "rgba(0, 0, 0, 0.4)",
+                      backgroundColor: "rgba(0, 0, 0, 0.7)",
                     }}
                   ></div>
                   <div
@@ -221,10 +233,45 @@ export default function Page() {
                     {userData?.name || "Untitled"}
                   </div>
 
-                  <div className="px-[30px] pt-[5px] pb-[20px] text-[15px] leading-[17px] text-bold text-white">
-                    {userData?.bio
-                      ? `${userData?.name} is an active GitHub contributor with ${userData?.public_repos} public repos. Followed by ${userData?.followers} 👥 and following ${userData?.following} 👣. Bio: ${userData?.bio}`
-                      : ""}
+                  <div className="absolute px-[30px] pt-[5px] pb-[20px] text-[15px] leading-[17px] text-bold text-white">
+                    {userData?.bio || userData?.name ? (
+                      <>
+                        <div className="mb-2">
+                          {userData?.name} is a coding wizard with{" "}
+                          {userData?.public_repos} public repos!
+                        </div>
+                        <div className="mb-2">
+                          {userData?.followers} devs follow their journey, while
+                          they keep tabs on {userData?.following} inspiring
+                          coders.
+                        </div>
+                        <div className="mt-4 mr-1">
+                          <span className="font-semibold text-green-700">
+                            sudo philosophy:
+                          </span>
+                          <span className="italic">
+                            "
+                            {userData?.bio ||
+                              "while(alive) { code(); coffee(); repeat(); }"}
+                            "
+                          </span>
+                        </div>
+                        {userData?.location && (
+                          <div className="mt-4 mb-2">
+                            <span className="font-semibold">Location:</span>{" "}
+                            {userData.location}
+                          </div>
+                        )}
+                        {userData?.twitter_username && (
+                          <div className="mb-2">
+                            <span className="font-semibold">Twitter/X:</span> @
+                            {userData.twitter_username}
+                          </div>
+                        )}
+                      </>
+                    ) : (
+                      ""
+                    )}
                   </div>
                 </Card.Section>
                 <Grid mt={16}>
@@ -248,21 +295,6 @@ export default function Page() {
               className="flex flex-col gap-4 py-20 pt-5 pr-4"
               // onSubmit={form.onSubmit(handleOnSubmit)}
             >
-              {/* <div className="flex items-center space-x-3">
-                <input
-                  className="w-full border border-[#0202271A] bg-[#EBE4F1] rounded-[10px] pretty uppercase focus:outline-none focus:border-gray-900 py-3 px-4"
-                  onChange={(e) => setUsername(e.target.value)}
-                />
-
-                <Button
-                  size="sm"
-                  className="w-[120px] py-[5px] px-[15px] bg-[#0F0906]"
-                  onClick={handleFetchUserData}
-                  loading={loading}
-                >
-                  validate
-                </Button>
-              </div> */}
               <TextInput
                 size="xl"
                 className={prettyFont.className}
@@ -276,10 +308,16 @@ export default function Page() {
                 rightSection={
                   <Button
                     size="sm"
-                    className="py-[5px] px-[15px] bg-[#0F0906]"
+                    className={clsx(
+                      {
+                        "bg-[#3f3a3a]": !username,
+                      },
+                      "py-[5px] px-[15px] bg-[#0F0906]"
+                    )}
                     onClick={handleFetchUserData}
                     loading={loading}
                     mr={10}
+                    disabled={!username}
                   >
                     validate
                   </Button>
@@ -291,10 +329,16 @@ export default function Page() {
               <Flex>
                 <Button
                   size="md"
-                  className="py-[10px] px-[20px] bg-[#0F0906]"
+                  className={clsx(
+                    {
+                      "bg-[#3f3a3a]": !username || !userData?.bio,
+                    },
+                    "py-[10px] px-[20px] bg-[#0F0906]"
+                  )}
                   loading={isMutating}
                   leftSection={<IconSparkles size={20} />}
                   onClick={handleOnSubmit}
+                  disabled={!username || !userData?.bio}
                 >
                   Create
                 </Button>

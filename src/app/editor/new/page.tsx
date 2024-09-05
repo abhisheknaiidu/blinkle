@@ -4,6 +4,7 @@ import { prettyFont } from "@/app/fonts";
 import Header from "@/components/Header";
 import { BLINK_TYPE } from "@/types";
 import { genericMutationFetcher } from "@/utils/swr-fetcher";
+import useScreen from "@/utils/useScreen";
 import {
   Badge,
   Button,
@@ -12,6 +13,7 @@ import {
   Grid,
   Textarea,
   TextInput,
+  Text,
   Title,
 } from "@mantine/core";
 import { isNotEmpty, useForm } from "@mantine/form";
@@ -45,6 +47,7 @@ type FormValues = {
 export default function Page() {
   const { publicKey } = useWallet();
   const router = useRouter();
+  const isMobile = useScreen();
 
   const form = useForm<FormValues>({
     mode: "controlled",
@@ -95,7 +98,15 @@ export default function Page() {
       console.log(err);
     }
   };
-
+  if (isMobile) {
+    return (
+      <div className="min-h-screen bg-purple-600 flex items-center justify-center">
+        <Text className="text-white text-center text-xl font-bold">
+          Dis web app is only for desktop bruv.
+        </Text>
+      </div>
+    );
+  }
   return (
     <div className="min-h-[100vh] mx-auto max-w-[1280px] px-[80px] items-center flex flex-col gap-5">
       <Header />
