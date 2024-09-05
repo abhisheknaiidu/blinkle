@@ -43,7 +43,9 @@ export async function generateImage(
   }
 
   // Launch puppeteer
-  const browser = await puppeteer.launch({});
+  const browser = await puppeteer.launch({
+    headless: true,
+  });
   const page = await browser.newPage();
   await page.setViewport({ width: 800, height: 800 });
 
