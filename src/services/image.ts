@@ -45,6 +45,7 @@ export async function generateImage(
   // Launch puppeteer
   const browser = await puppeteer.launch({
     headless: true,
+    args: ["--no-sandbox", "--disable-setuid-sandbox"],
   });
   const page = await browser.newPage();
   await page.setViewport({ width: 800, height: 800 });
