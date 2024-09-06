@@ -34,7 +34,8 @@ export const GET = async (req: NextRequest) => {
     const basePublicURL = `${SERVER_BASE_URL}images`;
 
     const imageRef = await generateImage(blinkData, userData.address);
-    const image = `${basePublicURL}/${imageRef}.png`;
+    // const image = `${basePublicURL}/${imageRef}.png`;
+    const image = imageRef;
 
     const payload: ActionGetResponse = {
       title: blinkData.title,

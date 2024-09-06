@@ -2,11 +2,28 @@ import { Blink, BLINK_TYPE } from "@/types";
 import * as fs from "fs";
 import * as path from "path";
 import * as puppeteer from "puppeteer";
+import { BlobServiceClient } from "@azure/storage-blob";
+const AZURE_STORAGE_CONNECTION_STRING =
+  process.env.AZURE_STORAGE_CONNECTION_STRING;
+const blobServiceClient = BlobServiceClient.fromConnectionString(
+  AZURE_STORAGE_CONNECTION_STRING || ""
+);
+const containerClient = blobServiceClient.getContainerClient("blinkle-images");
+
+const IMAGES_CACHE: Record<
+  string,
+  {
+    url: string;
+    hash: string;
+  }
+> = {};
 
 export async function generateImage(
   blink: Blink,
   userId: string
 ): Promise<string> {
+
+  
   const templateDir = path.join(process.cwd(), "src/services/helpers");
   let htmlContent: string;
 
@@ -98,5 +115,20 @@ export async function generateImage(
   await page.screenshot({ path: imagePath });
   await browser.close();
 
-  return `${userId}/${blink.id}`;
+  const blobName = `${userId}/${blink.id}.png`;
+  const blobClient = containerClient.getBlobClient(blobName);
+  const data = fs.readFileSync(imagePath);
+  const contentType = "image/png";
+  const blockBlobClient = blobClient.getBlockBlobClient();
+  await blockBlobClient.upload(data, data.length, {
+    metadata: {
+      contentType,
+    },
+  });
+
+  console.log("IMAGE UPLOADED. URL:", blobClient.url);
+
+  fs.unlinkSync(imagePath);
+
+  return blobClient.url;
 }

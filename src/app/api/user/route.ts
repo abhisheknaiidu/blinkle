@@ -17,7 +17,8 @@ export async function GET(req: NextRequest) {
     await Promise.all(
       Object.values(userData.blinks).map(async (fund) => {
         const img = await generateImage(fund, userAddress);
-        fund.image = `/images/${img}.png`;
+        // fund.image = `/images/${img}.png`;
+        fund.image = img;
         console.log(img);
         return img;
       })

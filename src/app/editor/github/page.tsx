@@ -134,11 +134,12 @@ export default function Page() {
               userData?.followers
             } devs follow their journey, while they keep tabs on ${
               userData?.following
-            } inspiring coders. 
+            } inspiring coders.
 sudo philosophy: "${
               userData?.bio || "while(alive) { code(); coffee(); repeat(); }"
             }"
-location: ${userData?.location}`,
+location: ${userData?.location || "N/A"}
+x: @${userData?.twitter_username || "N/A"}`,
             type: BLINK_TYPE.GITHUB,
             avatar: userData?.avatar_url,
           },
