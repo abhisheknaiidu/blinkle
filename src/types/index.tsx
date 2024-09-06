@@ -8,6 +8,7 @@ export type GitHubBlink = {
   id: string;
   title: string;
   description: string;
+  renderDescription: string;
   avatar: string;
   image?: string;
   raised: number;

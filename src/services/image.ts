@@ -1,8 +1,10 @@
-import { Blink, BLINK_TYPE } from "@/types";
+import { Blink, BLINK_TYPE, GitHubBlink } from "@/types";
+import { BlobServiceClient } from "@azure/storage-blob";
+import crypto from "crypto";
 import * as fs from "fs";
 import * as path from "path";
 import * as puppeteer from "puppeteer";
-import { BlobServiceClient } from "@azure/storage-blob";
+
 const AZURE_STORAGE_CONNECTION_STRING =
   process.env.AZURE_STORAGE_CONNECTION_STRING;
 const blobServiceClient = BlobServiceClient.fromConnectionString(
@@ -22,8 +24,22 @@ export async function generateImage(
   blink: Blink,
   userId: string
 ): Promise<string> {
+  const imageBlobName = `${userId}/${blink.id}.png`;
+  const blobClient = containerClient.getBlobClient(imageBlobName);
 
-  
+  const blinkDataString = JSON.stringify(blink);
+  const blinkDataStringHash = crypto
+    .createHash("sha256")
+    .update(blinkDataString)
+    .digest("hex");
+
+  if (
+    IMAGES_CACHE[imageBlobName] &&
+    IMAGES_CACHE[imageBlobName].hash === blinkDataStringHash
+  ) {
+    return IMAGES_CACHE[imageBlobName].url;
+  }
+
   const templateDir = path.join(process.cwd(), "src/services/helpers");
   let htmlContent: string;
 
@@ -71,7 +87,7 @@ export async function generateImage(
   } else {
     htmlContent = htmlContent.replace(
       /\{\{description\}\}/g,
-      blink.description
+      (blink as GitHubBlink).renderDescription || blink.description
     );
   }
   htmlContent = htmlContent.replace(/\{\{raised\}\}/g, blink.raised.toFixed(2));
@@ -115,8 +131,6 @@ export async function generateImage(
   await page.screenshot({ path: imagePath });
   await browser.close();
 
-  const blobName = `${userId}/${blink.id}.png`;
-  const blobClient = containerClient.getBlobClient(blobName);
   const data = fs.readFileSync(imagePath);
   const contentType = "image/png";
   const blockBlobClient = blobClient.getBlockBlobClient();
@@ -125,6 +139,11 @@ export async function generateImage(
       contentType,
     },
   });
+
+  IMAGES_CACHE[imageBlobName] = {
+    url: blobClient.url,
+    hash: blinkDataStringHash,
+  };
 
   console.log("IMAGE UPLOADED. URL:", blobClient.url);
 

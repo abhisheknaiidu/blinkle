@@ -9,6 +9,7 @@ export async function POST(req: Request) {
     const body = (await req.json()) as {
       title: string;
       description: string;
+      renderDescription?: string;
       type: BLINK_TYPE;
       avatar?: string;
     };
@@ -47,6 +48,7 @@ export async function POST(req: Request) {
       image: `./test.svg`,
       type: body.type,
       avatar: body.avatar as any,
+      renderDescription: body.renderDescription || "",
     };
 
     await saveUser(userAddress, userData);

@@ -135,11 +135,26 @@ export default function Page() {
             } devs follow their journey, while they keep tabs on ${
               userData?.following
             } inspiring coders.
-sudo philosophy: "${
+$sudo philosophy: "${
               userData?.bio || "while(alive) { code(); coffee(); repeat(); }"
             }"
-location: ${userData?.location || "N/A"}
-x: @${userData?.twitter_username || "N/A"}`,
+Location: ${userData?.location || "N/A"}
+Twitter/X: @${userData?.twitter_username || "N/A"}`,
+            renderDescription: `${userData?.name} is a coding wizard with ${
+              userData?.public_repos
+            } public repos! ${
+              userData?.followers
+            } devs follow their journey, while they keep tabs on ${
+              userData?.following
+            } inspiring coders.
+<br/>
+$sudo philosophy: "${
+              userData?.bio || "while(alive) { code(); coffee(); repeat(); }"
+            }"
+<br/>
+Location: ${userData?.location || "N/A"}
+<br/>
+Twitter/X: @${userData?.twitter_username || "N/A"}`,
             type: BLINK_TYPE.GITHUB,
             avatar: userData?.avatar_url,
           },
@@ -258,7 +273,7 @@ x: @${userData?.twitter_username || "N/A"}`,
                         </div>
                         <div className="mt-4 mr-1">
                           <span className="font-semibold text-green-700">
-                            sudo philosophy:
+                            $sudo philosophy:
                           </span>
                           <span className="italic">
                             {`"${
