@@ -49,17 +49,17 @@ export const GET = async (req: NextRequest) => {
             href: `${baseHref}&amount=${amount}`,
           })),
           // custom input field
-          {
-            label: "Custom Amount",
-            href: `${baseHref}`,
-            parameters: [
-              {
-                name: "amount",
-                label: "Amount",
-                required: true,
-              },
-            ],
-          },
+          // {
+          //   label: "Sponsor",
+          //   href: `${baseHref}`,
+          //   parameters: [
+          //     {
+          //       name: "amount",
+          //       label: "Custom Amount",
+          //       required: true,
+          //     },
+          //   ],
+          // },
         ],
       },
       disabled: false,
