@@ -135,11 +135,9 @@ export default function Page() {
             } devs follow their journey, while they keep tabs on ${
               userData?.following
             } inspiring coders. 
-<br/>
 sudo philosophy: "${
               userData?.bio || "while(alive) { code(); coffee(); repeat(); }"
             }"
-<br/>
 location: ${userData?.location}`,
             type: BLINK_TYPE.GITHUB,
             avatar: userData?.avatar_url,
