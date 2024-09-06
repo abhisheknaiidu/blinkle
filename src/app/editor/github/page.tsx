@@ -127,8 +127,20 @@ export default function Page() {
         type: "post",
         rest: [
           {
-            title: userData?.name,
-            description: "@" + username + "\n" + (userData?.bio || ""),
+            title: userData?.name || "Untitled",
+            description: `${userData?.name} is a coding wizard with ${
+              userData?.public_repos
+            } public repos! ${
+              userData?.followers
+            } devs follow their journey, while they keep tabs on ${
+              userData?.following
+            } inspiring coders. 
+<br/>
+sudo philosophy: "${
+              userData?.bio || "while(alive) { code(); coffee(); repeat(); }"
+            }"
+<br/>
+location: ${userData?.location}`,
             type: BLINK_TYPE.GITHUB,
             avatar: userData?.avatar_url,
           },
@@ -233,7 +245,7 @@ export default function Page() {
                     {userData?.name || "Untitled"}
                   </div>
 
-                  <div className="absolute px-[30px] pt-[5px] pb-[20px] text-[15px] leading-[17px] text-bold text-white">
+                  <div className="absolute px-[30px] pt-[5px] pb-[20px] text-[15px] leading-[17px] text-bold text-white opacity-70">
                     {userData?.bio || userData?.name ? (
                       <>
                         <div className="mb-2">
@@ -250,10 +262,10 @@ export default function Page() {
                             sudo philosophy:
                           </span>
                           <span className="italic">
-                            "
-                            {userData?.bio ||
-                              "while(alive) { code(); coffee(); repeat(); }"}
-                            "
+                            {`"${
+                              userData?.bio ||
+                              "while(alive) { code(); coffee(); repeat(); }"
+                            }"`}
                           </span>
                         </div>
                         {userData?.location && (
