@@ -46,6 +46,7 @@ body {
   -webkit-box-orient: vertical;
   overflow: hidden;
   max-width: 600px;
+  line-height: 1;
 }
 .e2137_280 {
   display: flex;

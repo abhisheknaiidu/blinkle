@@ -45,26 +45,17 @@ const Header = () => {
           CONNECT
         </Button>
       ) : (
-        <div className="flex items-center gap-10">
-          <Menu width={200} position="bottom-end">
-            <Menu.Target>
-              <Button
-                onClick={() => router.push("/dashboard")}
-                className="cursor-pointer"
-                style={{
-                  borderRadius: "2rem",
-                  fontSize: "0.9rem",
-                  backgroundColor: "black",
-                  color: "white",
-                  fontWeight: 400,
-                  textTransform: "uppercase",
-                  padding: "0.25rem 1.5rem",
-                }}
-              >
-                dashboard
-              </Button>
-            </Menu.Target>
-          </Menu>
+        <div className="flex items-center gap-5">
+          <Button
+            // onClick={() => router.push("/dashboard")}
+            variant="subtle"
+            size="compact-sm"
+            component={Link}
+            href="/dashboard"
+            color="dark"
+          >
+            Dashboard
+          </Button>
           <Menu width={200} position="bottom-end">
             <Menu.Target>
               {/* <ActionIcon variant="subtle" p={0} h="fit-content" w="fit-content"> */}
