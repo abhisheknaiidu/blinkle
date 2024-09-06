@@ -43,10 +43,24 @@ export const GET = async (req: NextRequest) => {
       description: blinkData.description,
       label: "Transfer", // this value will be ignored since `links.actions` exists
       links: {
-        actions: DEFAULT_DONATE_OPTIONS.map((amount, index) => ({
-          label: `${amount} SOL`,
-          href: `${baseHref}&amount=${amount}`,
-        })),
+        actions: [
+          ...DEFAULT_DONATE_OPTIONS.map((amount, index) => ({
+            label: `${amount} SOL`,
+            href: `${baseHref}&amount=${amount}`,
+          })),
+          // custom input field
+          {
+            label: "Custom Amount",
+            href: `${baseHref}`,
+            parameters: [
+              {
+                name: "amount",
+                label: "Amount",
+                required: true,
+              },
+            ],
+          },
+        ],
       },
       disabled: false,
     };
