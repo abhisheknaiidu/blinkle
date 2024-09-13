@@ -36,6 +36,12 @@ export const GET = async (req: NextRequest) => {
     const imageRef = await generateImage(blinkData, userData.address);
     // const image = `${basePublicURL}/${imageRef}.png`;
     const image = imageRef;
+    if (userData.blinks[blinkData.id].views) {
+      userData.blinks[blinkData.id].views += 1;
+    } else {
+      userData.blinks[blinkData.id].views = 1;
+    }
+    await saveUser(userData.address, userData);
 
     const payload: ActionGetResponse = {
       title: blinkData.title,
@@ -147,6 +153,7 @@ export const POST = async (req: Request) => {
     // TODO: Validate txn with cron
     // Doing optimistic update of raised funds for now
     userData.blinks[blinkData.id].raised += amount;
+
     await saveUser(userData.address, userData);
 
     return Response.json(payload, {

@@ -13,6 +13,7 @@ export type GitHubBlink = {
   image?: string;
   raised: number;
   type: BLINK_TYPE.GITHUB;
+  views: number;
 };
 
 export type DripBlink = {
@@ -23,6 +24,7 @@ export type DripBlink = {
   image?: string;
   raised: number;
   type: BLINK_TYPE.DRIP;
+  views: number;
 };
 
 export type FundraiserBlink = {
@@ -32,6 +34,7 @@ export type FundraiserBlink = {
   image?: string;
   raised: number;
   type: BLINK_TYPE.FUNDRAISER;
+  views: number;
 };
 
 export type Blink = GitHubBlink | DripBlink | FundraiserBlink;

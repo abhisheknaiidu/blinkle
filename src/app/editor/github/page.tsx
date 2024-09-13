@@ -2,6 +2,7 @@
 
 import { prettyFont } from "@/app/fonts";
 import Header from "@/components/Header";
+import { trackEvent } from "@/services/analytics";
 import { BLINK_TYPE } from "@/types";
 import { genericMutationFetcher } from "@/utils/swr-fetcher";
 import useScreen from "@/utils/useScreen";
@@ -22,7 +23,7 @@ import axios from "axios";
 import cn from "classnames";
 import clsx from "clsx";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { toast } from "sonner";
 import useSWRMutation from "swr/mutation";
 
@@ -70,6 +71,11 @@ export default function Page() {
   const [userData, setUserData] = useState<UserDataType>();
   const [loading, setLoading] = useState(false);
 
+  useEffect(() => {
+    trackEvent("category_page_view", {
+      category: "github",
+    });
+  }, []);
   // const { mutateUser } = useUser();
   const form = useForm<FormValues>({
     mode: "controlled",
@@ -164,6 +170,9 @@ Twitter/X: @${userData?.twitter_username || "N/A"}`,
             },
           },
         ],
+      });
+      trackEvent("blink_created", {
+        category: "github",
       });
       // await mutateUser();
       router.push("/dashboard");

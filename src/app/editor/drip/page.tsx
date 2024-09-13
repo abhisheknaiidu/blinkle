@@ -2,6 +2,7 @@
 
 import { prettyFont } from "@/app/fonts";
 import Header from "@/components/Header";
+import { trackEvent } from "@/services/analytics";
 import { BLINK_TYPE } from "@/types";
 import { genericMutationFetcher } from "@/utils/swr-fetcher";
 import useScreen from "@/utils/useScreen";
@@ -20,7 +21,7 @@ import { IconSparkles } from "@tabler/icons-react";
 import cn from "classnames";
 import clsx from "clsx";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { toast } from "sonner";
 import useSWRMutation from "swr/mutation";
 
@@ -61,6 +62,11 @@ export default function Page() {
     genericMutationFetcher
   );
 
+  useEffect(() => {
+    trackEvent("category_page_view", {
+      category: "drip",
+    });
+  }, []);
   const fetchUserDetails = async () => {
     setLoading(true);
     const fetchPromise = fetch("/api/drip", {
@@ -102,6 +108,9 @@ export default function Page() {
             },
           },
         ],
+      });
+      trackEvent("blink_created", {
+        category: "drip",
       });
       // await mutateUser();
       router.push("/dashboard");
