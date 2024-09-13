@@ -181,18 +181,17 @@ export default function Page() {
                 .map((_, index) => <Skeleton height={200} key={index} />)
             : funds.map((fundraiser) => {
                 const solanaUrl = `solana-action:${SERVER_BASE_URL}api/actions/blinks?user=${user.address}&blink=${fundraiser.id}`;
-                // https://dial.to/?action=solana-action%3Ahttps%3A%2F%2Frelative-dog-uniquely.ngrok-free.app%2Fapi%2Factions%2Fblinks%3Fuser%3D5sy3ayWTWE7bnXBhrRThTo722q67mzo7T8m43Kk6Y2wr%26blink%3Dc9a81bb3-4e39-4cf5-a26e-d529d7b1571a
                 const dialURL = `https://dial.to/?action=${encodeURIComponent(
                   solanaUrl
                 )}`;
                 const twitterShareContent = (() => {
                   switch (fundraiser.type) {
                     case BLINK_TYPE.FUNDRAISER:
-                      return `Check out my fundraiser on Solana: ${fundraiser.title} ${dialURL}`;
+                      return `i'm on @blinkle_xyz, if you'd like to support my cause, you can donate and share your encouragement ✨ ${fundraiser.title} ${dialURL}`;
                     case BLINK_TYPE.DRIP:
-                      return `Check out my drip on Solana: ${fundraiser.title} ${dialURL}`;
+                      return `i'm on @blinkle_xyz, if you find my work helpful, you can sponsor me 💧 ${dialURL}`;
                     case BLINK_TYPE.GITHUB:
-                      return `Check out my github on Solana: ${fundraiser.title} ${dialURL}`;
+                      return `i'm on @blinkle_xyz, if you find my work helpful, you can sponsor me 🌟 ${dialURL}`;
                   }
                 })();
                 const twitterShareURL = `https://twitter.com/intent/tweet?text=${encodeURIComponent(
@@ -261,9 +260,12 @@ export default function Page() {
                         <Text span fw={600}>
                           {fundraiser.raised} SOL
                         </Text>
-                        {" | Views: "}
+                        <Text span mx={10} c="dimmed">
+                          {" | "}
+                        </Text>
+                        {"Views: "}
                         <Text span fw={600}>
-                          {fundraiser.views} SOL
+                          {fundraiser.views || 0}
                         </Text>
                       </Text>
                     </div>
