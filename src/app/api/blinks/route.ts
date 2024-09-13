@@ -49,6 +49,7 @@ export async function POST(req: Request) {
       type: body.type,
       avatar: body.avatar as any,
       renderDescription: body.renderDescription || "",
+      views: 0,
     };
 
     await saveUser(userAddress, userData);
