@@ -2,6 +2,7 @@
 
 import { prettyFont } from "@/app/fonts";
 import Header from "@/components/Header";
+import { trackEvent } from "@/services/analytics";
 import { BLINK_TYPE } from "@/types";
 import { genericMutationFetcher } from "@/utils/swr-fetcher";
 import useScreen from "@/utils/useScreen";
@@ -21,6 +22,7 @@ import { useWallet } from "@solana/wallet-adapter-react";
 import { IconSparkles } from "@tabler/icons-react";
 import cn from "classnames";
 import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 import useSWRMutation from "swr/mutation";
 
 const TAB_OPTIONS = [
@@ -69,7 +71,11 @@ export default function Page() {
       // ),
     },
   });
-
+  useEffect(() => {
+    trackEvent("category_page_view", {
+      category: "fundraiser",
+    });
+  }, []);
   const { trigger, isMutating } = useSWRMutation(
     "/api/blinks",
     genericMutationFetcher
@@ -91,6 +97,9 @@ export default function Page() {
             },
           },
         ],
+      });
+      trackEvent("blink_created", {
+        category: "fundraiser",
       });
       // await mutateUser();
       router.push("/dashboard");

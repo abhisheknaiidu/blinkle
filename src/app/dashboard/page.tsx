@@ -25,11 +25,12 @@ import {
   IconShare,
 } from "@tabler/icons-react";
 import cn from "classnames";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { prettyFont } from "../fonts";
 import Link from "next/link";
 import useScreen from "@/utils/useScreen";
 import { SERVER_BASE_URL } from "@/utils/constants";
+import { trackEvent } from "@/services/analytics";
 
 const TAB_OPTIONS = [
   {
@@ -57,6 +58,11 @@ export default function Page() {
     return allFunds;
   }, [user, activeTab]);
 
+  useEffect(() => {
+    trackEvent("dashboard_page_view", {
+      page: "dashboard",
+    });
+  }, []);
   const renderDripDescription = (description: string) => {
     return (
       <Text

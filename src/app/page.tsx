@@ -13,8 +13,15 @@ import { motion } from "framer-motion";
 import { prettyFont } from "./fonts";
 import Link from "next/link";
 import useScreen from "@/utils/useScreen";
+import { trackEvent } from "@/services/analytics";
+import { useEffect } from "react";
 
 export default function Page() {
+  useEffect(() => {
+    trackEvent("landing_page_view", {
+      page: "Home",
+    });
+  }, []);
   const isMobile = useScreen();
   if (isMobile) {
     return (
